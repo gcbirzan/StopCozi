@@ -78,10 +78,10 @@
     height: 205px;
 }
 
-.baseAuthWrapper{
+/*.baseAuthWrapper{
     height: 100vh;
     text-align: center;
-}
+}*/
 
 .baseAuthWrapper .align-helper{
     display: inline-block;
@@ -90,11 +90,11 @@
     vertical-align: middle;
 }
 
-.baseAuthWrapper .align-helper ~ div{
+/*.baseAuthWrapper .align-helper ~ div{
     display: inline-block;
     float: none;
     vertical-align: middle;
-}
+}*/
 
 .filter-button-inline-wrapper{
     padding-top: 18px;
