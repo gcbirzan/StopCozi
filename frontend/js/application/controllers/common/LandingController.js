@@ -3,8 +3,6 @@ var CommonLandingController = ['$controller', '$scope', '$rootScope', '$state', 
         $controller('ParentController', {$scope: $scope});
 
         $rootScope.pageTitle = translationFactory.translate('common.landing.title|Bine ai venit');
-
-
     }
 ];
 

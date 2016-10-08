@@ -24,24 +24,9 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h1 class="title">Programeaza-ti acum o vizita la ghiseu.</h1>
-        <div class="row search-row animated fadeInUp">
-            <div class="col-lg-4 col-sm-4 search-col relative locationicon">
-                <i class="glyphicon glyphicon-pushpin icon-append"></i>
-                <input type="text" name="region" class="form-control locinput input-rel searchtag-input has-icon" placeholder="Judet">
-            </div>
-            <div class="col-lg-4 col-sm-4 search-col relative">
-                <i class="glyphicon glyphicon-home icon-append"></i>
-                <input type="text" name="institution" class="form-control has-icon" placeholder="Institutie">
-            </div>
-            <div class="col-lg-4 col-sm-4 search-col relative">
-                <i class="glyphicon glyphicon-tasks icon-append"></i>
-                <input type="text" name="service" class="form-control has-icon" placeholder="Serviciu">
-            </div>
-        </div>
-    </div>
-    <div class="row center">
-      <a ui-sref="common.reservation" class="btn btn-primary">{{ 'common.reservations|Next' | translate }}</a>
-    </div>
+    <div ng-include="'views/common/reservation_step1.html'" ng-show="step == 1"></div>
+    <div ng-include="'views/common/reservation_step2.html'" ng-show="step == 2"></div>
+    <div ng-include="'views/common/reservation_step3.html'" ng-show="step == 3"></div>
+
+    <div ui-view=""></div>
 </div>

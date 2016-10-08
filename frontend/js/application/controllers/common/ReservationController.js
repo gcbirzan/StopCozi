@@ -1,6 +1,33 @@
-var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory',
-    function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory) {
+var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory', '$stateParams',
+    function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory, $stateParams) {
         $controller('ParentController', {$scope: $scope});
+
+        $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Pas 1');
+
+        var checkStep = function () {
+            $scope.step = 0;
+            if ($stateParams.step) {
+                angular.forEach([1, 2, 3], function(i) {
+                    if ($stateParams.step.indexOf(i) != -1) {
+                        $scope.step = i;
+                    }
+                });
+            }
+            if (!$scope.step) {
+                $scope.step = 1;
+            }
+        }
+
+        checkStep();
+
+        var cancelStateChangeHandler = $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+            $stateParams.step = toParams.step;
+            checkStep();
+        });
+
+        $scope.$on('$destroy', function() {
+            cancelStateChangeHandler();
+        });
 
         $scope.countyList = [{
             id: 'BH',
@@ -43,6 +70,11 @@ angular
             .state('common.reservation', {
                 url: '^/common/reservation',
                 templateUrl: CONFIG.apiUrlFactory('views/common/reservation.html')
-            });
+            })
+            .state('common.reservation.step', {
+                url: '^/common/reservation/:step',
+                template: '<div ui-view=""></div>'
+            })
+        ;
     }])
     .controller('CommonReservationController', CommonReservationController);
