@@ -318,6 +318,7 @@ _CONFIG.extend({
 });
 
 // We use this on the initial application load
+/*
 _CONFIG.extend({
     checkLoggedInInit: function () {
         var req = {
@@ -358,8 +359,10 @@ _CONFIG.extend({
             });
     }
 });
+*/
 
 // We use this when employing state
+/*
 _CONFIG.extend({
     checkLoggedIn: ['$rootScope', '$location', '$state', '$q', '$timeout', '$http', 'apiUrlFactory', 'aclFactory', 'CONFIG',
         function ($rootScope, $location, $state, $q, $timeout, $http, apiUrlFactory, aclFactory, CONFIG) {
@@ -403,98 +406,7 @@ _CONFIG.extend({
         }
     ]
 });
-
-_CONFIG.extend({
-    checkTemplateUrl: ['$http', '$stateParams', '$templateCache', '$rootScope', '$location', '$state', '$q', '$timeout', 'apiUrlFactory', 'aclFactory', 'CONFIG',
-        function ($http, $stateParams, $templateCache, $rootScope, $location, $state, $q, $timeout, apiUrlFactory, aclFactory, CONFIG) {
-            var actuallyCheckTemplateUrl = function () {
-                var slug = $stateParams.slug;
-                if (angular.isString(slug) && slug.length) {
-                    if (slug.substr(0, 1) === '/') {
-                        slug = slug.substr(1);
-                    }
-                    var parts = slug.indexOf('.') != -1 ? slug.split('.') : slug.split('/');
-                    if (parts.length) {
-                        var tplName;
-                        var attemptedLength = 0;
-                        if (parts.length > 1) {
-                            tplName = apiUrlFactory('views/' + parts[0] + '/' + parts[1] + '.html');
-                            attemptedLength = 2;
-                        } else {
-                            tplName = apiUrlFactory('views/' + parts[0] + '.html');
-                            attemptedLength = 1;
-                        }
-
-                        if ($templateCache.get(tplName)) {
-                            return tplName;
-                        }
-
-                        return $http.get(tplName)
-                            .then(function (response) {
-                                return tplName;
-                            }, function (response) {
-                                if (attemptedLength == 2) {
-                                    tplName = apiUrlFactory('views/' + parts[0] + '.html');
-                                    attemptedLength == 1;
-
-                                    if ($templateCache.get(tplName)) {
-                                        return tplName;
-                                    }
-
-                                    return $http.get(tplName)
-                                        .then(function (response) {
-                                            return tplName;
-                                        }, function (response) {
-                                            if (parts.length == 3) {
-                                                tplName = apiUrlFactory('views/' + parts[0] + '/' + parts[1] + '/' + parts[2] + '.html');
-
-                                                if ($templateCache.get(tplName)) {
-                                                    return tplName;
-                                                }
-
-                                                return $http.get(tplName)
-                                                    .then(function (response) {
-                                                        return tplName;
-                                                    }, function (response) {
-                                                        return apiUrlFactory('views/dashboard/base.html');
-                                                    });
-                                            }
-
-                                            return apiUrlFactory('views/dashboard/base.html');
-                                        });
-                                }
-
-                                return apiUrlFactory('views/dashboard/base.html');
-                            });
-                    }
-                }
-
-                return apiUrlFactory('views/dashboard/base.html');
-            }
-
-            if (CONFIG.user) {
-                return actuallyCheckTemplateUrl();
-            } else {
-                if (typeof(CONFIG.user) == 'undefined') {
-                    return $http.get(apiUrlFactory('/auth/check')).then(function (response) {
-                        if ((typeof(response.success) == 'undefined' || response.success) && response.data) {
-                            angular.extend(CONFIG, response.data)
-                            aclFactory.setup();
-                            $rootScope.userName = angular.isString(CONFIG.user) ? CONFIG.user : '';
-                            return actuallyCheckTemplateUrl();
-                        } else {
-                            CONFIG.user = false;
-                            return apiUrlFactory('views/auth/login.html');
-                        }
-                    });
-                } else {
-                    return apiUrlFactory('views/auth/login.html');
-                }
-            }
-
-        }
-    ]
-});
+*/
 
 
 var configApplication = ['$stateProvider', '$urlRouterProvider', 'IdleProvider', 'KeepaliveProvider', '$authProvider', '$httpProvider', '$provide', 'CONFIG',
@@ -623,27 +535,6 @@ var configApplication = ['$stateProvider', '$urlRouterProvider', 'IdleProvider',
         // Satellizer configuration that specifies which API
         // route the JWT should be retrieved from
         $authProvider.loginUrl = CONFIG.apiUrlFactory('/auth/login');
-
-        $stateProvider
-            // This is able to guess the template and import it automatically. But there are some problems when nesting views. Needs a bit more work.
-            // To use it change all ui-sref="state name" into ng-href="path to view" (dashboard => dashboard/main) and use $location.url() instead of $state.go()
-            // Leave it out for now so it does not affect the other states in the rest of the files.
-            /*
-            .state('guess', {
-                url: '/*slug',
-                templateProvider: ['checkTemplateUrl', '$templateRequest',
-                    function(checkTemplateUrl, $templateRequest) {
-                        return $templateRequest(checkTemplateUrl ? checkTemplateUrl : CONFIG.apiUrlFactory('views/dashboard/base.html'));
-                    }
-                ],
-                resolve: {
-                    // no need for this as it is handled by the template check
-                    //checkLoggedIn: CONFIG.checkLoggedIn,
-                    checkTemplateUrl: CONFIG.checkTemplateUrl
-                }
-            })
-            */
-        ;
     }
 ];
 

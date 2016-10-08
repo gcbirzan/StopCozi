@@ -14,7 +14,7 @@ angular
     .config(['$stateProvider', 'CONFIG', function($stateProvider, CONFIG) {
         $stateProvider
             .state('common.landing', {
-                url: '^/common/landing',
+                url: '^',
                 templateUrl: CONFIG.apiUrlFactory('views/common/landing.html')
             });
     }])
