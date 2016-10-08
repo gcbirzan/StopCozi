@@ -1,0 +1,11 @@
+<div ng-controller="AuthLoginController as auth_login" class="ng-hide" ng-show="true">
+    <form class="m-t" role="form" action="#" ng-submit="tryToLogin()" onsubmit="return false">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="{{ 'auth.login|Username' | translate }}" required="" ng-model="name">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="{{ 'auth.login|Parola' | translate }}" required="" ng-model="password">
+        </div>
+        <button type="submit" class="btn btn-primary block full-width m-b">{{ 'auth.login|Login' | translate }}</button>
+    </form>
+</div>
