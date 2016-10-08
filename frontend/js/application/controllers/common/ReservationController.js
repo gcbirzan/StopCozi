@@ -1,8 +1,8 @@
-var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory', '$stateParams',
-    function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory, $stateParams) {
+var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory', '$stateParams', 'toastr',
+    function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory, $stateParams, toastr) {
         $controller('ParentController', {$scope: $scope});
 
-        $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Pas 1');
+        $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Rezervare');
 
         var checkStep = function () {
             $scope.step = 0;
@@ -29,36 +29,84 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             cancelStateChangeHandler();
         });
 
-        $scope.countyList = [{
-            id: 'BH',
-            name: 'Bihor'
-        }, {
-            id: 'GL',
-            name: 'Galati'
-        }];
+        $scope.data = {};
 
-        $scope.agencies = [      {
-        		parent: 'BH',
-            id: 1,
-            name: "SPCLEP",
-            description: "Evidenta Populatiei",
-            location: "BH",
-            geo: "2355,46767",
-            address: "Cicoarei 17",
-            contact:"tel: 07346"
-          },{
-          	parent: 'GL',
-            id: 2,
-            name: "Pasapoarte",
-            description: "Biroul Pasapoarte",
-            location: "GL",
-            geo: "6757,63467",
-            address: "Prezan 12",
-            contact:"tel: 07346"
-          }];
-        $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Bine ai venit');
+        $http
+            .get(apiUrlFactory('data/counties.json'))
+            .then(function (response) {
+                $scope.countiesBase = response.data;
+                $scope.counties = angular.copy($scope.countiesBase);
+                if (!$scope.counties || !$scope.counties.length) {
+                    toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit judete'));
+                }
+            });
 
+        $scope.refreshCounties = function(search) {
+            $scope.data.county = {};
+            $scope.counties = [];
+            $scope.data.agency = {};
+            $scope.agencies = [];
+            $scope.data.service = {};
+            $scope.services = [];
 
+            angular.forEach($scope.countiesBase, function(county) {
+                if (county.name.toLowerCase().indexOf(search.toLowerCase()) != -1) {
+                    $scope.counties.push(county);
+                }
+            });
+            if (!$scope.counties || !$scope.counties.length) {
+                toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit judete'));
+            }
+
+            $scope.checkStep2();
+        }
+
+        $scope.refreshAgencies = function(search) {
+            $scope.data.agency = {};
+            $scope.agencies = [];
+            $scope.data.service = {};
+            $scope.services = [];
+
+            if($scope.data.county && $scope.data.county.id) {
+                $http
+                    .get(apiUrlFactory('data/agencies.json?county=' + encodeURIComponent($scope.data.county.id) + '&search=' + encodeURIComponent(search)))
+                    .then(function (response) {
+                        $scope.agencies = response.data;
+                        if (!$scope.agencies || !$scope.agencies.length) {
+                            toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit agentii'));
+                        }
+                    });
+            }
+
+            $scope.checkStep2();
+        }
+
+        $scope.refreshServices = function(search) {
+            $scope.data.service = {};
+            $scope.services = [];
+
+            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
+                $http
+                    .get(apiUrlFactory('data/services.json?county=' + encodeURIComponent($scope.data.county.id) + '&agency=' + encodeURIComponent($scope.data.agency.id) + '&search=' + encodeURIComponent(search)))
+                    .then(function (response) {
+                        $scope.services = response.data;
+                        if (!$scope.services || !$scope.services.length) {
+                            toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit servicii'));
+                        }
+                    });
+            }
+
+            $scope.checkStep2();
+        }
+
+        $scope.checkStep2 = function() {
+            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
+                // TODO: fetch the slots
+                $scope.step2Enabled = true;
+            } else {
+                $scope.step2Enabled = false;
+            }
+        }
     }
 ];
 

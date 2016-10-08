@@ -1,20 +1,45 @@
 <div class="container">
     <h1 class="title">Programeaza-ti acum o vizita la ghiseu.</h1>
+    
     <div class="row search-row animated fadeInUp">
         <div class="col-lg-4 col-sm-4 search-col relative locationicon">
-            <i class="glyphicon glyphicon-pushpin icon-append"></i>
-            <input type="text" name="region" class="form-control locinput input-rel searchtag-input has-icon" placeholder="Judet">
+            <ui-select ng-model="data.county"  on-select="refreshAgencies('')">
+                <ui-select-match placeholder="{{ 'reservation.step1|Judet' | translate }}">
+                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Judet' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
+                </ui-select-match>
+                <ui-select-choices repeat="option in counties" refresh="refreshCounties($select.search)" refresh-delay="250">
+                    <div title="{{ option.name }}">{{ option.name }}</div>
+                </ui-select-choices>
+            </ui-select>
+            <!--<i class="glyphicon glyphicon-pushpin icon-append"></i>-->
+            <!--<input type="text" name="region" class="form-control locinput input-rel searchtag-input has-icon" placeholder="Judet">-->
         </div>
         <div class="col-lg-4 col-sm-4 search-col relative">
-            <i class="glyphicon glyphicon-home icon-append"></i>
-            <input type="text" name="institution" class="form-control has-icon" placeholder="Institutie">
+            <ui-select ng-model="data.agency"  on-select="refreshServices('')">
+                <ui-select-match placeholder="{{ 'reservation.step1|Agentie' | translate }}">
+                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Agentie' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
+                </ui-select-match>
+                <ui-select-choices repeat="option in agencies" refresh="refreshAgencies($select.search)" refresh-delay="250">
+                    <div title="{{ option.name }}">{{ option.name }}</div>
+                </ui-select-choices>
+            </ui-select>
+            <!--<i class="glyphicon glyphicon-home icon-append"></i>-->
+            <!--<input type="text" name="institution" class="form-control has-icon" placeholder="Institutie">-->
         </div>
         <div class="col-lg-4 col-sm-4 search-col relative">
-            <i class="glyphicon glyphicon-tasks icon-append"></i>
-            <input type="text" name="service" class="form-control has-icon" placeholder="Serviciu">
+            <ui-select ng-model="data.service"  on-select="checkStep2()">
+                <ui-select-match placeholder="{{ 'reservation.step1|Serviciu' | translate }}">
+                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Serviciu' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
+                </ui-select-match>
+                <ui-select-choices repeat="option in services" refresh="refreshServices($select.search)" refresh-delay="250">
+                    <div title="{{ option.name }}">{{ option.name }}</div>
+                </ui-select-choices>
+            </ui-select>
+            <!--<i class="glyphicon glyphicon-tasks icon-append"></i>-->
+            <!--<input type="text" name="service" class="form-control has-icon" placeholder="Serviciu">-->
         </div>
     </div>
 </div>
 <div class="row center">
-    <a ui-sref="common.reservation.step({step: '2'})" class="btn btn-primary">{{ 'common.reservations|Urmator' | translate }}</a>
+    <a ui-sref="common.reservation.step({step: '2'})" class="btn btn-primary" ng-show="step2Enabled">{{ 'common.reservations|Urmator' | translate }}</a>
 </div>
