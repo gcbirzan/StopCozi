@@ -8074,3 +8074,43 @@ body.md-skin {
         display: none;
     }
 }
+
+h1 {
+  font-size: 28px;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+
+.search-col {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.has-icon {
+    padding-left: 31px;
+}
+
+.btn-primary {
+  background-color: #57C4C7;
+  border-radius: 0;
+  border-color: #1f898c;
+}
+
+.btn-primary:hover {
+  background-color: #37b0b3;
+  border-color: #37b0b3;
+}
+
+.center {
+  text-align: center;
+}
+
+.icon-append {
+  color: #949494;
+  font-size: 15px;
+  left: 23px;
+  position: absolute;
+  top: 12px;
+}
