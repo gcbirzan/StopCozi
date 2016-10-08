@@ -12,6 +12,7 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
+        private Long duration;
     @ManyToOne
     @JoinColumn(name = "agencyId")
     private Agency agency;
@@ -30,6 +31,14 @@ public class Service {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     public Agency getAgency() {

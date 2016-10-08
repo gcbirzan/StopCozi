@@ -16,8 +16,8 @@ public class Agency {
     private long id;
     private String name;
     private String description;
-    private String county;
     private String location;
+    private String address;
     private String contact;
 
     public long getId() {
@@ -44,14 +44,6 @@ public class Agency {
         this.description = description;
     }
 
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -66,5 +58,13 @@ public class Agency {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
