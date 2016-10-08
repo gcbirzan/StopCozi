@@ -1,0 +1,13 @@
+<div class="baseAuthWrapper ng-hide" ng-show="true">
+    <div class="align-helper"></div>
+    <div ng-class="setBoxLarge ? '' : 'middle-box'" class="text-center animated fadeIn">
+        <div ng-controller="AuthBaseController as auth_base">
+            <div>
+                <h1 class="logo-name">{{ CONFIG.logoName }}</h1>
+            </div>
+            <div class="transparentLogin">
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+</div>
