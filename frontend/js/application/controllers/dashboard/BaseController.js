@@ -43,23 +43,18 @@ angular
         // but leave this in for the state provider
         // (with this altered callback option that prevents infinite redirect loops)
         $urlRouterProvider.otherwise(function($injector, $location) {
-            $injector.get('$state').go('dashboard');
+            $injector.get('$state').go('common.landing');
         });
 
         $stateProvider
             .state('dashboard', {
                 url: '^/dashboard',
                 templateUrl: CONFIG.apiUrlFactory('views/dashboard/base.html'),
+                /*
                 resolve: {
                     checkLoggedIn: CONFIG.checkLoggedIn
                 }
+                */
             })
-            .state('dashboard.change_password', {
-                url: '^/dashboard/change_password',
-                templateUrl: CONFIG.apiUrlFactory('views/change_password/change_password.html'),
-                resolve: {
-                    checkLoggedIn: CONFIG.checkLoggedIn
-                }
-            });
     }])
     .controller('DashboardBaseController', DashboardBaseController);
