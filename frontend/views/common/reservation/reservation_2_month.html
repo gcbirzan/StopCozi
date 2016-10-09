@@ -1,7 +1,6 @@
 <div class="container">
     <h1 class="title">Programeaza-ti acum o vizita la ghiseu.</h1>
     <div class="row search-row animated fadeInUp">
-        {{data.date}}
         <input type="text" class="form-control" date-time ng-model="data.date" force-open="true" prevent-close="true" hide-input="true" auto-close="false" format="{{ $root.CONFIG.dateTimeFormats.shortDateFormat }}" min-date="minDate" view="date" min-view="date" auto-close="true" />
     </div>
 </div>

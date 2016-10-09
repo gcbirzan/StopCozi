@@ -37,10 +37,10 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
             if (
                 false
-                //$scope.step >= 2 && (!$scope.data || !$scope.data.county.id || !$scope.data.agency.id || !$scope.data.service.id)
-                //|| $scope.step >= 3 && (!$scope.data || !$scope.data.date)
-                //|| $scope.step >= 4 && (!$scope.data || !$scope.data.time)
-                //|| $scope.step >= 5 && (!$scope.data || !$scope.data.name || !$scope.data.mobile)
+                || $scope.step >= 2 && (!$scope.data || !$scope.data.county || !$scope.data.county.id || !$scope.data.agency || !$scope.data.agency.id || !$scope.data.service || !$scope.data.service.id)
+                || $scope.step >= 3 && (!$scope.data || !$scope.data.date || !$scope.times || !$scope.times.length)
+                || $scope.step >= 4 && (!$scope.data || !$scope.data.time)
+                || $scope.step >= 5 && (!$scope.data || !$scope.data.name || !$scope.data.mobile)
             ) {
                 $state.go('common.reservation')
             }
@@ -68,7 +68,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         }
 
         $scope.checkStep3 = function() {
-            if($scope.data.date) {
+            if($scope.data.date && $scope.times && $scope.times.length) {
                 $scope.step3Enabled = true;
             } else {
                 $scope.step3Enabled = false;
@@ -94,8 +94,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
-            $scope.data.date = {};
-            $scope.data.time = {};
+            $scope.data.date = '';
+            $scope.data.time = '';
             $scope.freeslots = [];
 
             angular.forEach($scope.countiesBase, function(county) {
@@ -115,8 +115,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
-            $scope.data.date = {};
-            $scope.data.time = {};
+            $scope.data.date = '';
+            $scope.data.time = '';
             $scope.freeslots = [];
 
             if($scope.data.county && $scope.data.county.id) {
@@ -141,8 +141,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $scope.refreshServices = function(search) {
             $scope.data.service = {};
             $scope.services = [];
-            $scope.data.date = {};
-            $scope.data.time = {};
+            $scope.data.date = '';
+            $scope.data.time = '';
             $scope.freeslots = [];
 
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
@@ -182,6 +182,25 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.checkStep3();
         }
 
+        $scope.refreshTimes = function() {
+            $scope.times = [];
+            if ($scope.data.date) {
+                var format = moment.convertFormatFromPhp(CONFIG.shortStableDateFormat);
+                angular.forEach($scope.freeslots, function(slot) {
+                    if (moment($scope.data.date).format(format) == moment(slot.start).format(format)) {
+                        $scope.times.push({id: slot.start, name: moment(slot.start).format(moment.convertFormatFromPhp(CONFIG.shortTimeFormat))});
+                    }
+                });
+            }
+
+            if (!$scope.times.length && $scope.step == 2) {
+                // a little bit intrusive
+                //toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit sloturi libere'));
+            }
+
+            $scope.checkStep3();
+        }
+
         $scope.endReservation = function() {
             $http
                 .get(apiUrlFactory('data/validation.json?validationCode=' + encodeURIComponent($scope.data.validationCode)))
@@ -197,6 +216,12 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                     }
                 });
         };
+
+        $scope.$watch('data.date', function(newValue, oldValue) {
+            if (newValue != oldValue) {
+                $scope.refreshTimes();
+            }
+        });
     }
 ];
 
