@@ -32,6 +32,7 @@ public class FreeSlotService {
     private OfficeDao officeDao;
 	
 	private final long ONE_SECOND_IN_MILLIS = 1000;
+	private final long ONE_MINUTE_IN_SECONDS = 60;
 
 	private Date addSecondsToDate(Date op1, long sec) {
 		return new Date(op1.getTime() + sec * ONE_SECOND_IN_MILLIS);
@@ -64,7 +65,7 @@ public class FreeSlotService {
     	ArrayList<Office> offices  = (ArrayList<Office>) officeDao.findByServiceId(serviceId);
     	
     	ArrayList<FreeSlot> freeSlots = new ArrayList<>();
-    	Long duration = service.getDuration();
+    	Long duration = service.getDuration() * ONE_MINUTE_IN_SECONDS;
     	
     	int numberOfSlots = (int) ((endDate.getTime() - startDate.getTime()) / ONE_SECOND_IN_MILLIS / duration);
     	
