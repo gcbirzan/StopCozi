@@ -116,11 +116,11 @@ angular
     .config(['$stateProvider', 'CONFIG', function($stateProvider, CONFIG) {
         $stateProvider
             .state('common.reservation', {
-                url: '^/common/reservation',
+                url: '^',
                 templateUrl: CONFIG.apiUrlFactory('views/common/reservation.html')
             })
             .state('common.reservation.step', {
-                url: '^/common/reservation/:step',
+                url: '^/reservation/:step',
                 template: '<div ui-view=""></div>'
             })
         ;

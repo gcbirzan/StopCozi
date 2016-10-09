@@ -532,6 +532,10 @@ var configApplication = ['$stateProvider', '$urlRouterProvider', 'IdleProvider',
             });
         */
 
+        $urlRouterProvider.otherwise(function($injector, $location) {
+            $injector.get('$state').go('common.reservation');
+        });
+
         // Satellizer configuration that specifies which API
         // route the JWT should be retrieved from
         $authProvider.loginUrl = CONFIG.apiUrlFactory('/auth/login');

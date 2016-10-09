@@ -38,14 +38,6 @@ var DashboardBaseController = ['$controller', '$scope', '$rootScope', '$state', 
 angular
     .module('custom')
     .config(['$stateProvider', '$urlRouterProvider', 'CONFIG', function($stateProvider, $urlRouterProvider, CONFIG) {
-
-        // no need for this as it is handled by the template check
-        // but leave this in for the state provider
-        // (with this altered callback option that prevents infinite redirect loops)
-        $urlRouterProvider.otherwise(function($injector, $location) {
-            $injector.get('$state').go('common.landing');
-        });
-
         $stateProvider
             .state('dashboard', {
                 url: '^/dashboard',
