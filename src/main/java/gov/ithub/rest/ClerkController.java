@@ -37,9 +37,11 @@ public class ClerkController {
     private OfficeDao officeDao;
 
     @GET
-    @Path("/appointments/{officeId}")
+    @Path("/appointments/{officeId}/{date}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAppointments(@PathParam("officeId") Long officeId) throws ParseException {
+    public Response getAppointments(
+        @PathParam("officeId") Long officeId,
+        @PathParam("date") String date) throws ParseException {
       Office office = officeDao.findOne(officeId);
       if (office == null) {
         return Response.status(404).build();
