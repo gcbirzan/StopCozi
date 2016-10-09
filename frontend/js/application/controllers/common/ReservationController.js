@@ -75,6 +75,15 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             }
         }
 
+        $scope.checkStep4 = function(time) {
+            $scope.data.time = time;
+            if($scope.data.time) {
+                $scope.step4Enabled = true;
+            } else {
+                $scope.step4Enabled = false;
+            }
+        }
+
         $http
             .get(apiUrlFactory('data/counties.json'))
             .then(function (response) {
