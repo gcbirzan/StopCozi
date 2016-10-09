@@ -1,12 +1,10 @@
-{
-    "agencies": [{
-        "id": "1",
-        "name": "Evidenta Populatiei"
-    },{
-        "id": "2",
-        "name": "Serviciul Pasapoarte"
-    },{
-        "id": "3",
-        "name": "Finante Publice"
-    }]
-}
+[{
+    "id": "1",
+    "name": "Evidenta Populatiei"
+},{
+    "id": "2",
+    "name": "Serviciul Pasapoarte"
+},{
+    "id": "3",
+    "name": "Finante Publice"
+}]

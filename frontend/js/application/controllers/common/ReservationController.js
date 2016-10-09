@@ -15,6 +15,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
         $scope.minDate = moment();
 
+        var fakeApi = false;
+
         var checkStep = function () {
             $scope.step = 0;
             if ($stateParams.step) {
@@ -87,8 +89,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $http
             .get(apiUrlFactory('data/counties.json'))
             .then(function (response) {
-                if (response.data && response.data.counties) {
-                    $scope.countiesOrig = response.data.counties;
+                if (response.data) {
+                    $scope.countiesOrig = response.data;
                 }
                 $scope.countiesBase = [];
                 angular.forEach($scope.countiesOrig, function(county) {
@@ -135,8 +137,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             if($scope.data.county && $scope.data.county.id) {
                 $http
                     .get(
-                        apiUrlFactory('/agencies', true) + '/' + encodeURIComponent($scope.data.county.id) + (search ? '/' + encodeURIComponent(search) : '')
-                        //apiUrlFactory('data/agencies.json')
+                        !fakeApi ? apiUrlFactory('/agencies', true) + '/' + encodeURIComponent($scope.data.county.id) + (search ? '/' + encodeURIComponent(search) : '')
+                        : apiUrlFactory('data/agencies.json')
                     )
                     .then(function (response) {
                         if (response.data) {
@@ -161,8 +163,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
                 $http
                     .get(
-                        apiUrlFactory('/services', true) + '/' + encodeURIComponent($scope.data.agency.id) + (search ? '/' + encodeURIComponent(search) : '')
-                        //apiUrlFactory('data/services.json')
+                        !fakeApi ? apiUrlFactory('/services', true) + '/' + encodeURIComponent($scope.data.agency.id) + (search ? '/' + encodeURIComponent(search) : '')
+                        : apiUrlFactory('data/services.json')
                     )
                     .then(function (response) {
                         if (response.data) {
@@ -183,8 +185,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
                 $http
                     .get(
-                        apiUrlFactory('/freeslots', true) + '/' + encodeURIComponent($scope.data.service.id)
-                        //apiUrlFactory('data/freeslots.json')
+                        !fakeApi ? apiUrlFactory('/freeslots', true) + '/' + encodeURIComponent($scope.data.service.id)
+                        : apiUrlFactory('data/freeslots.json')
                     )
                     .then(function (response) {
                         if (response.data) {

@@ -1,5 +1,4 @@
-{
-    "counties": [
+[
    {
     "name": "BUCURESTI - SECTOR 1",
     "id": "B"
@@ -185,4 +184,3 @@
     "id": "VN"
   }
 ]
-}
