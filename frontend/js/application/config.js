@@ -15,7 +15,8 @@ angular.extend(_CONFIG, {
     development: false, // set the development flag
     showTranslationKeys: false,
     baseUrl: '', // the base URL
-    apiUrl: '/api', // the API base URL
+    //apiUrl: 'http://10.10.20.102:8080', // the API base URL
+    apiUrl: 'http://193.230.8.27:31080', // the API base URL
     applicationName: 'StopCozi',
     applicationMail: 'info@stopcozi.ro',
     logoName: 'StopCozi',
@@ -431,10 +432,10 @@ var configApplication = ['$stateProvider', '$urlRouterProvider', 'IdleProvider',
         // because previous version of code introduced browser-related errors
 
         //disable IE ajax request caching
-        $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+        //$httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
         // extra
-        $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
-        $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+        //$httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+        //$httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
         // Configure jQuery AJAX
         $(document)

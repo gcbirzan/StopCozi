@@ -156,7 +156,6 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         }
 
         $scope.refreshAgencies = function(search) {
-            $scope.data.agency = {};
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
@@ -184,7 +183,6 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         }
 
         $scope.refreshServices = function(search) {
-            $scope.data.service = {};
             $scope.services = [];
             $scope.data.date = '';
             $scope.data.time = '';
@@ -281,7 +279,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                 )
                 .then(function (response) {
                     if (response.data && response.data.id) {
-                        toastr.success(translationFactory.translate('common.reservation|Rezervre programata. Veti primi un SMS de confirmare.'));
+                        toastr.success(translationFactory.translate('common.reservation|Rezervare programata. Veti primi un SMS de confirmare.'));
                         $state.go('common.landing');
                     } else {
                         toastr.error(translationFactory.translate('common.reservation|Rezervarea a eşuat!'));
