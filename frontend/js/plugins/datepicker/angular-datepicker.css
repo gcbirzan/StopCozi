@@ -221,6 +221,6 @@
 }
 [date-picker] th:hover,
 [date-picker] [ng-switch-when="date"] td span:hover {
-  background: #eeeeee;
+  /*background: #eeeeee;*/
   cursor: pointer;
 }
