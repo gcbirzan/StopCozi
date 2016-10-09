@@ -15,6 +15,7 @@ public class JerseyConfig extends ResourceConfig {
         register(new ObjectMapperContextResolver());
         register(CitizenController.class);
         register(ClerkController.class);
+        register(CORSFilter.class);
     }
 
 }
