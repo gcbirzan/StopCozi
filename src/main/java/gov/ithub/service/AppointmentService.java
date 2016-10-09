@@ -39,31 +39,31 @@ public class AppointmentService {
 
     @Autowired
     private OfficeDao officeDao;
-    
+
     private String formatDate(Date date) {
     	return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
     }
-    
+
     private String getSMSContent(String name, String service, String data, long code) {
     	return "Vesti bune" + name + ", programarea Dvoastra la " + service + " pe data de " + data + " este confirmata. Codul programarii este " + code + ".";
     }
-    
+
     private void sendSMS(String message, String to, String from) throws Exception {
         StringBuilder result = new StringBuilder();
         String apiSecret = System.getenv(SMS_SERVICE_API_SECRET_ENV);
         String apiKey = System.getenv(SMS_SERVICE_API_KEY_ENV);
         String urlString = "https://rest.nexmo.com/sms/json?api_key=" + apiKey + "&api_secret=" + apiSecret + "&from=" + from + "&to=" + to + "&text=" + URLEncoder.encode(message, "UTF-8");
-        
+
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String line;
-        
+
         while ((line = rd.readLine()) != null) {
            result.append(line);
         }
-        
+
         rd.close();
     }
 
@@ -82,20 +82,29 @@ public class AppointmentService {
         if(firstFreeOffice.isPresent()) {
             appointment.setOffice(firstFreeOffice.get());
             Optional<Appointment> createdAppointment = Optional.of(appointmentDao.save(appointment));
-            
+
             if (createdAppointment.isPresent()) {
             	try {
             		Appointment app = createdAppointment.get();
-            		
             		sendSMS(getSMSContent(app.getName(), service.getName(), formatDate(app.getStart()), app.getId()), app.getPhone(), "StopCozi");
             	} catch (Exception e) {
-            		
+                // TODO: treat exception.
             	}
-            	
             	return createdAppointment;
             }
         }
-           
         return Optional.empty();
+    }
+
+    public Optional<Appointment> getAppointment(Long appointmentId) {
+      Appointment appointment = appointmentDao.findOne(appointmentId);
+      if (appointment == null) {
+        return Optional.empty();
+      }
+      return Optional.of(appointment);
+    }
+
+    public Appointment updateAppointment(Appointment appointment) {
+      return appointmentDao.save(appointment);
     }
 }

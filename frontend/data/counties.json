@@ -1,5 +1,25 @@
 {
     "counties": [
+   {
+    "name": "BUCURESTI - SECTOR 1",
+    "id": "B"
+  },
+  {
+    "name": "BUCURESTI - SECTOR 2",
+    "id": "B"
+  },
+  {
+    "name": "BUCURESTI - SECTOR 3",
+    "id": "B"
+  },
+  {
+    "name": "BUCURESTI - SECTOR 4",
+    "id": "B"
+  },
+  {
+    "name": "BUCURESTI - SECTOR 5",
+    "id": "B"
+  },
   {
     "name": "ALBA",
     "id": "AB"
