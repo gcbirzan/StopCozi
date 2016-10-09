@@ -31,13 +31,25 @@ public class ClerkController {
     @Autowired
     private OfficeDao officeDao;
 
+    // Example call: /appointments/85/2016-12-31
     @GET
-    @Path("/appointments/{officeId}")
+    @Path("/appointments/{officeId}/{date}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAppointments(@PathParam("officeId") Long officeId) throws ParseException {
+    public Response getAppointments(
+        @PathParam("officeId") Long officeId,
+        @PathParam("date") String date
+    ) throws ParseException {
       Office office = officeDao.findOne(officeId);
-      Date start = new Calendar.Builder().setDate(2016, 10, 9).setTimeOfDay(0, 0, 0).build().getTime();
-      Date end = new Calendar.Builder().setDate(2016, 10, 10).setTimeOfDay(0, 0, 0).build().getTime();
+      if (office == null) {
+        return Response.status(404).build();
+      }
+
+      Date start = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(start);
+      cal.add(Calendar.HOUR, 24);
+      Date end = cal.getTime();
+
       List<Appointment> appointmentList = appointmentDao.getAppointmentsForService(office.getService().getId(), start, end);
       return Response.status(200).entity(appointmentList).build();
     }
