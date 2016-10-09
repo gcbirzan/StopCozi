@@ -13,6 +13,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $scope.reservationEnabled = false;
 
         $scope.minDate = moment();
+        $scope.data.date = moment();
 
         var fakeApi = false;
 
@@ -225,10 +226,10 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                         }
 
                         $scope.checkStep2();
+
+                        $scope.refreshTimes();
                     });
             }
-
-            $scope.checkStep3();
         }
 
         $scope.refreshTimes = function() {

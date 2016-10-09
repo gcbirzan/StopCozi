@@ -209,7 +209,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
                 classList += 'active';
               }
               if (isNow(week[j], view)) {
-                classList += ' now';
+                //classList += ' now';
               }
               //if (week[j].month() !== date.month()) classList += ' disabled';
               if (week[j].month() !== date.month() || !inValidRange(week[j])) {
@@ -229,7 +229,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
               classList += 'active';
             }
             if (isNow(dates[i], view)) {
-              classList += ' now';
+              //classList += ' now';
             }
             if (!inValidRange(dates[i])) {
               classList += ' disabled';
