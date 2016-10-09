@@ -1,9 +1,6 @@
 <div ng-controller="CommonReservationController as common_reservation" class="ng-hide" ng-show="true">
-    <nav class="navbar navbar-default">
-        <div class="navbar-header">
-            <a href ui-sref="info" class="navbar-brand">Stop Cozi</a>
-        </div>
-    </nav>
+
+    <img src="images/StopCozi_Logo.png" style="width:100px; height:100px;" />
 
     <div ng-include="'views/common/reservation/reservation_1_combos.html'" ng-show="step == 1"></div>
     <div ng-include="'views/common/reservation/reservation_2_month.html'" ng-show="step == 2"></div>

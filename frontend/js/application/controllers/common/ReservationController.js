@@ -60,7 +60,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
 
         $scope.checkStep2 = function() {
-            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
+            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id && $scope.freeslots && $scope.freeslots.length) {
                 $scope.step2Enabled = true;
             } else {
                 $scope.step2Enabled = false;
@@ -208,8 +208,6 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         }
 
         $scope.refreshSlots = function() {
-            $scope.checkStep2();
-
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
                 $http
                     .get(
@@ -225,6 +223,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                         } else {
                             $scope.minDate = $scope.freeslots[0].start;
                         }
+
+                        $scope.checkStep2();
                     });
             }
 
