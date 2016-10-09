@@ -114,7 +114,7 @@ public class FreeSlotService {
 				}
 			}
 			
-			for (int j = 0; j < numberOfFreeOffices; j++) {
+			if (numberOfFreeOffices != 0) {
 				FreeSlot slot = new FreeSlot();
 				slot.setStart(slotStartDate);
 				slot.setEnd(slotEndDate);
