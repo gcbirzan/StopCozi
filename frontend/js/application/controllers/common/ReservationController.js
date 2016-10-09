@@ -181,6 +181,22 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
             $scope.checkStep3();
         }
+
+        $scope.endReservation = function() {
+            $http
+                .get(apiUrlFactory('data/validation.json?validationCode=' + encodeURIComponent($scope.data.validationCode)))
+                .then(function (response) {
+                    if (response.data && response.data.status && response.data.status === 'OK') {
+                        toastr.success('Booking ID: ' + response.data.bookingId);
+
+                        return;
+                    }
+
+                    if (response.data.status !== 'OK') {
+                        toastr.error(translationFactory.translate('common.reservation|Validarea a eşuat!'));
+                    }
+                });
+        };
     }
 ];
 

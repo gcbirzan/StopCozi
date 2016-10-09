@@ -1,12 +1,168 @@
 {
-    "counties": [{
-        "id": "Bihor",
-        "name": "Bihor"
-    },{
-        "id": "Galati",
-        "name": "Galati"
-    },{
-        "id": "Iasi",
-        "name": "Iasi"
-    }]
+    "counties": [
+  {
+    "name": "ALBA",
+    "id": "AB"
+  },
+  {
+    "name": "ARAD",
+    "id": "AR"
+  },
+  {
+    "name": "ARGES",
+    "id": "AG"
+  },
+  {
+    "name": "BACAU",
+    "id": "BC"
+  },
+  {
+    "name": "BIHOR",
+    "id": "BH"
+  },
+  {
+    "name": "BISTRITA-NASAUD",
+    "id": "BN"
+  },
+  {
+    "name": "BOTOSANI",
+    "id": "BT"
+  },
+  {
+    "name": "BRAILA",
+    "id": "BR"
+  },
+  {
+    "name": "BRASOV",
+    "id": "BV"
+  },
+  {
+    "name": "BUZAU",
+    "id": "BZ"
+  },
+  {
+    "name": "CALARASI",
+    "id": "CL"
+  },
+  {
+    "name": "CARAS-SEVERIN",
+    "id": "CS"
+  },
+  {
+    "name": "CLUJ",
+    "id": "CJ"
+  },
+  {
+    "name": "CONSTANTA",
+    "id": "CT"
+  },
+  {
+    "name": "COVASNA",
+    "id": "CV"
+  },
+  {
+    "name": "DIMBOVITA",
+    "id": "DB"
+  },
+  {
+    "name": "DOLJ",
+    "id": "DJ"
+  },
+  {
+    "name": "GALATI",
+    "id": "GL"
+  },
+  {
+    "name": "GIURGIU",
+    "id": "GR"
+  },
+  {
+    "name": "GORJ",
+    "id": "GJ"
+  },
+  {
+    "name": "HARGHITA",
+    "id": "HR"
+  },
+  {
+    "name": "HUNEDOARA",
+    "id": "HD"
+  },
+  {
+    "name": "IALOMITA",
+    "id": "IL"
+  },
+  {
+    "name": "IASI",
+    "id": "IS"
+  },
+  {
+    "name": "ILFOV",
+    "id": "IF"
+  },
+  {
+    "name": "MARAMURES",
+    "id": "MM"
+  },
+  {
+    "name": "MEHEDINTI",
+    "id": "MH"
+  },
+  {
+    "name": "MURES",
+    "id": "MS"
+  },
+  {
+    "name": "NEAMT",
+    "id": "NT"
+  },
+  {
+    "name": "OLT",
+    "id": "OT"
+  },
+  {
+    "name": "PRAHOVA",
+    "id": "PH"
+  },
+  {
+    "name": "SALAJ",
+    "id": "SJ"
+  },
+  {
+    "name": "SATU MARE",
+    "id": "SM"
+  },
+  {
+    "name": "SIBIU",
+    "id": "SB"
+  },
+  {
+    "name": "SUCEAVA",
+    "id": "SV"
+  },
+  {
+    "name": "TELEORMAN",
+    "id": "TR"
+  },
+  {
+    "name": "TIMIS",
+    "id": "TM"
+  },
+  {
+    "name": "TULCEA",
+    "id": "TL"
+  },
+  {
+    "name": "VASLUI",
+    "id": "VS"
+  },
+  {
+    "name": "VILCEA",
+    "id": "VL"
+  },
+  {
+    "name": "VRANCEA",
+    "id": "VN"
+  }
+]
 }
