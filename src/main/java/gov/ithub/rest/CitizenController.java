@@ -48,9 +48,8 @@ public class CitizenController {
     @Path("/services/{agencyId}/{serviceName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
-        Service service = serviceDao.findByAgency(agencyDao.findOne(agencyId));
-        serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%"+serviceName+"%");
-        return Response.status(200).entity(service).build();
+        List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName + "%");
+        return Response.status(200).entity(services).build();
     }
 
     @GET
