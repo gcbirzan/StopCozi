@@ -1,8 +1,10 @@
 package gov.ithub.rest;
 
 import gov.ithub.dao.AgencyDao;
+import gov.ithub.dao.AppointmentDao;
 import gov.ithub.dao.ServiceDao;
 import gov.ithub.model.Agency;
+import gov.ithub.model.Appointment;
 import gov.ithub.model.FreeSlot;
 import gov.ithub.model.Service;
 import gov.ithub.service.FreeSlotService;
@@ -24,26 +26,30 @@ public class CitizenController {
 
     @Autowired
     private AgencyDao agencyDao;
-
+    
     @Autowired
     private ServiceDao serviceDao;
+
+    @Autowired
+    private AppointmentDao appointmentDao;
 
     @Autowired
     private FreeSlotService freeSlotService;
 
     @GET
-    @Path("/agencies/{location}")
+    @Path("/agencies/{location}/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAgencies(@PathParam("location") String location) {
-        List<Agency> agencies = agencyDao.findByLocation(location);
+    public Response getAgencies(@PathParam("location") String location, @PathParam("name") String name) {
+        List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name + "%");
         return Response.status(200).entity(agencies).build();
     }
 
     @GET
-    @Path("/services/{agencyId}")
+    @Path("/services/{agencyId}/{serviceName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId) {
+    public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
         Service service = serviceDao.findByAgency(agencyDao.findOne(agencyId));
+        serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%"+serviceName+"%");
         return Response.status(200).entity(service).build();
     }
 
@@ -53,5 +59,13 @@ public class CitizenController {
     public Response getFreeSlots(@PathParam("serviceId") Long serviceId) {
         List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, new Date());
         return Response.status(200).entity(freeSlotList).build();
+    }
+
+    @POST
+    @Path("/appointment/{serviceId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createAppointment(@PathParam("serviceId") Long serviceId, Appointment appointment) {
+        appointmentDao.save(appointment);
+        return Response.status(200).entity(appointment.getId()).build();
     }
 }

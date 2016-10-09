@@ -13,6 +13,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Date start;
+    private Date end;
     private String name;
     private String phone;
     @ManyToOne
@@ -33,6 +34,14 @@ public class Appointment {
 
     public void setStart(Date start) {
         this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
     public String getName() {
@@ -58,4 +67,5 @@ public class Appointment {
     public void setOffice(Office office) {
         this.office = office;
     }
+
 }

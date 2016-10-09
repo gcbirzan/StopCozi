@@ -12,10 +12,10 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-        private Long duration;
     @ManyToOne
     @JoinColumn(name = "agencyId")
     private Agency agency;
+    private long duration;
 
     public long getId() {
         return id;
@@ -33,10 +33,6 @@ public class Service {
         this.name = name;
     }
 
-    public Long getDuration() {
-        return duration;
-    }
-
     public void setDuration(Long duration) {
         this.duration = duration;
     }
@@ -48,4 +44,12 @@ public class Service {
     public void setAgency(Agency agency) {
         this.agency = agency;
     }
+    
+    public long getDuration() {
+		return duration;
+	}
+    
+    public void setDuration(long duration) {
+		this.duration = duration;
+	}
 }

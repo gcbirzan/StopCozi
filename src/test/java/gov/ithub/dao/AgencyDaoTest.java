@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by NiBo on 10/8/2016.
  */
@@ -33,21 +31,18 @@ public class AgencyDaoTest {
         Agency agency = new Agency();
         agency.setId(Long.valueOf(1));
         agency.setContact("Str. Basarabiei nr. 3");
-        agency.setCounty("Iasi");
         agency.setDescription("Short Description");
         agency.setLocation("IS");
         agency.setName("Test Agency");
         agencyDao.save(agency);
         agency.setId(Long.valueOf(2));
         agency.setContact("Str. Galati nr. 7");
-        agency.setCounty("Iasi");
         agency.setDescription("Long LOng Description");
         agency.setLocation("IS");
         agency.setName("Directia Finantelor Publice Iasi");
         agencyDao.save(agency);
         agency.setId(Long.valueOf(3));
         agency.setContact("Str. Dunarea nr. 7");
-        agency.setCounty("Dolj");
         agency.setDescription("Long LOng Description");
         agency.setLocation("DJ");
         agency.setName("Directia Finantelor Publice Dolj");
@@ -60,5 +55,12 @@ public class AgencyDaoTest {
         Assert.assertNotNull(agencies);
         Assert.assertTrue(agencies.size() == 2);
 
+    }
+
+    @Test
+    public void testFindByLocationAndNameLike() throws Exception {
+        List<Agency> agencies = agencyDao.findByLocationAndNameLike("IS", "%Directia%");
+        Assert.assertNotNull(agencies);
+        Assert.assertTrue(agencies.size() == 1);
     }
 }

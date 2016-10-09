@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface AgencyDao extends CrudRepository<Agency, Long> {
     List<Agency> findByLocation(String location);
+    List<Agency> findByLocationAndNameLike(String location, String name);
 }

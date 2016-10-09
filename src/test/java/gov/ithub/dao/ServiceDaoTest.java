@@ -43,25 +43,28 @@ public class ServiceDaoTest {
         Assert.assertEquals(service.getName(), "Depunere formular 200");
     }
 
+    @Test
+    public void testFind(){
+        Service service = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(Long.valueOf(1)), "%formular%");
+        Assert.assertNotNull(service);
+    }
+
     private void populateWithAgencies() {
         Agency agency = new Agency();
         agency.setId(Long.valueOf(1));
         agency.setContact("Str. Basarabiei nr. 3");
-        agency.setCounty("Iasi");
         agency.setDescription("Short Description");
         agency.setLocation("IS");
         agency.setName("Test Agency");
         agencyDao.save(agency);
         agency.setId(Long.valueOf(2));
         agency.setContact("Str. Galati nr. 7");
-        agency.setCounty("Iasi");
         agency.setDescription("Long LOng Description");
         agency.setLocation("IS");
         agency.setName("Directia Finantelor Publice Iasi");
         agencyDao.save(agency);
         agency.setId(Long.valueOf(3));
         agency.setContact("Str. Dunarea nr. 7");
-        agency.setCounty("Dolj");
         agency.setDescription("Long LOng Description");
         agency.setLocation("DJ");
         agency.setName("Directia Finantelor Publice Dolj");
