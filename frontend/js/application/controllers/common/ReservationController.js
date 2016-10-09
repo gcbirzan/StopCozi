@@ -31,7 +31,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             }
 
             if (
-                $scope.step >= 2 && (!$scope.data || !$scope.data.county.id || !$scope.data.agency.id || !$scope.data.service.id)
+                false
+                //$scope.step >= 2 && (!$scope.data || !$scope.data.county.id || !$scope.data.agency.id || !$scope.data.service.id)
                 //|| $scope.step >= 3 && (!$scope.data || !$scope.data.date)
                 //|| $scope.step >= 4 && (!$scope.data || !$scope.data.time)
                 //|| $scope.step >= 5 && (!$scope.data || !$scope.data.name || !$scope.data.mobile)
@@ -56,7 +57,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $http
             .get(apiUrlFactory('data/counties.json'))
             .then(function (response) {
-                $scope.countiesBase = response.data;
+                if (response.data && response.data.counties) {
+                    $scope.countiesBase = response.data.counties;
+                }
                 $scope.counties = angular.copy($scope.countiesBase);
                 if (!$scope.counties || !$scope.counties.length) {
                     toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit judete'));
@@ -93,7 +96,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                 $http
                     .get(apiUrlFactory('data/agencies.json?county=' + encodeURIComponent($scope.data.county.id) + '&search=' + encodeURIComponent(search)))
                     .then(function (response) {
-                        $scope.agencies = response.data;
+                        if (response.data && response.data.agencies) {
+                            $scope.agencies = response.data.agencies;
+                        }
                         if (!$scope.agencies || !$scope.agencies.length) {
                             toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit agentii'));
                         }
@@ -111,7 +116,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                 $http
                     .get(apiUrlFactory('data/services.json?county=' + encodeURIComponent($scope.data.county.id) + '&agency=' + encodeURIComponent($scope.data.agency.id) + '&search=' + encodeURIComponent(search)))
                     .then(function (response) {
-                        $scope.services = response.data;
+                        if (response.data && response.data.services) {
+                            $scope.services = response.data.services;
+                        }
                         if (!$scope.services || !$scope.services.length) {
                             toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit servicii'));
                         }

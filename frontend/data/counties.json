@@ -1,10 +1,12 @@
-[{
-    "id": "BH",
-    "name": "Bihor"
-},{
-    "id": "GL",
-    "name": "Galati"
-},{
-    "id": "IS",
-    "name": "Iasi"
-}]
+{
+    "counties": [{
+        "id": "BH",
+        "name": "Bihor"
+    },{
+        "id": "GL",
+        "name": "Galati"
+    },{
+        "id": "IS",
+        "name": "Iasi"
+    }]
+}
