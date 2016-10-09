@@ -36,6 +36,14 @@ public class Appointment {
         this.start = start;
     }
 
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
     public String getName() {
         return name;
     }
