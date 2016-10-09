@@ -4,10 +4,23 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
         $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Rezervare');
 
+        $scope.step2Enabled = false;
+        $scope.step3Enabled = true;
+        $scope.step4Enabled = true;
+        $scope.step5Enabled = true;
+        $scope.reservationEnabled = true;
+
         var checkStep = function () {
             $scope.step = 0;
             if ($stateParams.step) {
-                angular.forEach([1, 2, 3], function(i) {
+                /*
+                1 - combos
+                2 - month view
+                3 - day view
+                4 - contact form
+                5 - validation form
+                 */
+                angular.forEach([1, 2, 3, 4, 5], function(i) {
                     if ($stateParams.step.indexOf(i) != -1) {
                         $scope.step = i;
                     }
@@ -15,6 +28,15 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             }
             if (!$scope.step) {
                 $scope.step = 1;
+            }
+
+            if (
+                $scope.step >= 2 && (!$scope.data || !$scope.data.county.id || !$scope.data.agency.id || !$scope.data.service.id)
+                //|| $scope.step >= 3 && (!$scope.data || !$scope.data.date)
+                //|| $scope.step >= 4 && (!$scope.data || !$scope.data.time)
+                //|| $scope.step >= 5 && (!$scope.data || !$scope.data.name || !$scope.data.mobile)
+            ) {
+                $state.go('common.reservation')
             }
         }
 

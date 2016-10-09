@@ -1,0 +1,10 @@
+<div class="container">
+    <h1 class="title">Programeaza-ti acum o vizita la ghiseu.</h1>
+    <div class="row search-row animated fadeInUp">
+        Form
+    </div>
+</div>
+<div class="row center">
+    <a ui-sref="common.reservation.step({step: '4'})" class="btn btn-primary">{{ 'common.reservations|Anterior' | translate }}</a>
+    <a ng-click="requestReservation()" class="btn btn-primary" ng-show="reservationEnabled">{{ 'common.reservations|Rezervare' | translate }}</a>
+</div>
