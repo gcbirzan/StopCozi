@@ -62,11 +62,12 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
         $scope.checkStep2 = function() {
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
-                // TODO: fetch the slots
                 $scope.step2Enabled = true;
             } else {
                 $scope.step2Enabled = false;
             }
+
+            return $scope.step2Enabled;
         }
 
         $scope.checkStep3 = function() {
@@ -75,15 +76,46 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             } else {
                 $scope.step3Enabled = false;
             }
+
+            return $scope.step3Enabled;
         }
 
         $scope.checkStep4 = function(time) {
-            $scope.data.time = time;
+            if (typeof(time) != 'undefined') {
+                $scope.data.time = time;
+            }
             if($scope.data.time) {
                 $scope.step4Enabled = true;
             } else {
                 $scope.step4Enabled = false;
             }
+
+            return $scope.step4Enabled;
+        }
+
+        $scope.checkStep5 = function() {
+            if($scope.data.name && $scope.data.mobile) {
+                $scope.step5Enabled = true;
+            } else {
+                $scope.step5Enabled = false;
+            }
+
+            return $scope.step5Enabled;
+        }
+
+        $scope.checkReservation = function() {
+            if(
+                $scope.checkStep2()
+                && $scope.checkStep3()
+                && $scope.checkStep4()
+                && $scope.checkStep5()
+            ) {
+                $scope.reservationEnabled = true;
+            } else {
+                $scope.reservationEnabled = false;
+            }
+
+            return $scope.reservationEnabled;
         }
 
         $http
@@ -239,8 +271,19 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         };
 
         $scope.$watch('data.date', function(newValue, oldValue) {
-            if (newValue != oldValue) {
+            if (newValue !== oldValue) {
                 $scope.refreshTimes();
+            }
+        });
+
+        $scope.$watch('data.name', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                $scope.checkReservation();
+            }
+        });
+        $scope.$watch('data.mobile', function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                $scope.checkReservation();
             }
         });
     }
