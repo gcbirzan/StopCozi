@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 /**
  * Created by claudiubar on 10/8/2016.
@@ -30,7 +31,7 @@ public class CitizenController {
 
     @Autowired
     private AgencyDao agencyDao;
-    
+
     @Autowired
     private ServiceDao serviceDao;
 
@@ -64,9 +65,14 @@ public class CitizenController {
     @Path("/freeslots/{serviceId}/{year}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFreeSlots(@PathParam("serviceId") Long serviceId, @PathParam("year") Integer year, @PathParam("month") Integer month) {
-    	Calendar calendar = Calendar.getInstance();
-    	calendar.set(Calendar.MONTH, month);
+    	Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+    	calendar.set(Calendar.MONTH, month - 1);
     	calendar.set(Calendar.YEAR, year);
+    	calendar.set(Calendar.DAY_OF_MONTH, 1);
+    	calendar.set(Calendar.HOUR_OF_DAY, 0);
+    	calendar.set(Calendar.MINUTE, 0);
+    	calendar.set(Calendar.SECOND, 0);
+    	calendar.set(Calendar.MILLISECOND, 0);
     	
         List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, calendar.getTime());
         return Response.status(200).entity(freeSlotList).build();
@@ -78,7 +84,7 @@ public class CitizenController {
     public Response createAppointment(@PathParam("serviceId") Long serviceId, Appointment appointment) {
         Optional<Appointment> savedAppointment = appointmentService.createAppointment(serviceId, appointment);
         return savedAppointment.isPresent() ?
-            Response.status(200).entity("Mergeti cu incredere la ghiseul " + appointment.getOffice().getName()).build() :
+            Response.status(200).entity(appointment).build() :
             Response.status(400).entity("Alcineva dorind sa rezerve in acelasi timp a reusit inaintea dv.").build();
     }
 }

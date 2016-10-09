@@ -93,7 +93,7 @@ public class FreeSlotService {
 			
 			//TODO: 1. remove hardcoded values.
 			//2. Possible optimization: remove this slots directly from the iteration process.
-			if (!intervalIsInWorkingHours(slotStartDate, slotEndDate, 8, 18)) {
+			if (!intervalIsInWorkingHours(slotStartDate, slotEndDate, 10, 20)) {
 				continue;
 			}
 			

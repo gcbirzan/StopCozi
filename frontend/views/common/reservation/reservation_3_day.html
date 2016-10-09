@@ -1,10 +1,11 @@
 <div class="container">
-    <h1 class="title">Programeaza-ti acum o vizita la ghiseu.</h1>
+    <h1 class="title">Programeaza-ti acum o vizita la ghiseu</h1>
+    <p>Selecteaza un interval orar disponibil</p>
     <div class="row search-row">
         <ul class="list-group" ng-repeat="time in times"> <li class="list-group-item" ng-class="[{active: data.time == time.id}]" ng-click="checkStep4(time.id)">{{ time.name }}</li> </ul>
     </div>
 </div>
 <div class="row center">
-    <a ui-sref="common.reservation.step({step: '2'})" class="btn btn-primary">{{ 'common.reservations|Anterior' | translate }}</a>
-    <a ui-sref="common.reservation.step({step: '4'})" class="btn btn-primary" ng-show="step4Enabled">{{ 'common.reservations|Urmator' | translate }}</a>
+    <a ui-sref="common.reservation.step({step: '2'})" class="btn btn-primary">{{ 'common.reservations|Pasul Anterior' | translate }}</a>
+    <a ui-sref="common.reservation.step({step: '4'})" class="btn btn-primary" ng-show="step4Enabled">{{ 'common.reservations|Pasul Urmator' | translate }}</a>
 </div>
