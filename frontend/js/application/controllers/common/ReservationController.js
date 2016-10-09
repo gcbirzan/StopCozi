@@ -283,7 +283,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                 .then(function (response) {
                     if (response.data && response.data.id) {
                         toastr.success(translationFactory.translate('common.reservation|Rezervare programata. Veti primi un SMS de confirmare.'));
-                        $state.go('common.landing');
+                        $state.go('common.final');
                     } else {
                         toastr.error(translationFactory.translate('common.reservation|Rezervarea a eşuat!'));
                     }
@@ -329,6 +329,10 @@ angular
             .state('common.adminsingle', {
                 url: '^/admin-reservation',
                 templateUrl: CONFIG.apiUrlFactory('views/common/admin/admin-reservation-single.html')
+            })
+            .state('common.final', {
+                url: '^/final',
+                templateUrl: CONFIG.apiUrlFactory('views/common/reservation_client_info.html')
             })
         ;
     }])
