@@ -92,7 +92,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                 }
                 $scope.countiesBase = [];
                 angular.forEach($scope.countiesOrig, function(county) {
-                    $scope.countiesBase.push({id: county.name, name: county.name});
+                    $scope.countiesBase.push({id: county.name, name: county.name.substr(0, 1).toUpperCase() + county.name.substr(1).toLowerCase()});
                 });
                 $scope.counties = $scope.countiesBase;
                 if (!$scope.counties || !$scope.counties.length) {
@@ -139,8 +139,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                         //apiUrlFactory('data/agencies.json')
                     )
                     .then(function (response) {
-                        if (response.data && response.data.agencies) {
-                            $scope.agencies = response.data.agencies;
+                        if (response.data) {
+                            $scope.agencies = response.data;
                         }
                         if (!$scope.agencies || !$scope.agencies.length) {
                             toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit agentii'));
@@ -160,10 +160,13 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
                 $http
-                    .get(apiUrlFactory('data/services.json') + '?agency=' + encodeURIComponent($scope.data.agency.id) + '&search=' + encodeURIComponent(search))
+                    .get(
+                        apiUrlFactory('/services', true) + '/' + encodeURIComponent($scope.data.agency.id) + (search ? '/' + encodeURIComponent(search) : '')
+                        //apiUrlFactory('data/services.json')
+                    )
                     .then(function (response) {
-                        if (response.data && response.data.services) {
-                            $scope.services = response.data.services;
+                        if (response.data) {
+                            $scope.services = response.data;
                         }
                         if (!$scope.services || !$scope.services.length) {
                             toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit servicii'));
@@ -179,10 +182,13 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
                 $http
-                    .get(apiUrlFactory('data/freeslots.json') + '?service=' + encodeURIComponent($scope.data.service.id))
+                    .get(
+                        apiUrlFactory('/freeslots', true) + '/' + encodeURIComponent($scope.data.service.id)
+                        //apiUrlFactory('data/freeslots.json')
+                    )
                     .then(function (response) {
-                        if (response.data && response.data.freeslots) {
-                            $scope.freeslots = response.data.freeslots;
+                        if (response.data) {
+                            $scope.freeslots = response.data;
                         }
                         if (!$scope.freeslots || !$scope.freeslots.length) {
                             toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit sloturi libere'));
