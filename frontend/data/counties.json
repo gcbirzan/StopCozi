@@ -1,9 +1,5 @@
 {
     "counties": [
-	 {
-    "name": "BUCURESTI",
-    "id": "B"
-  },
    {
     "name": "BUCURESTI - SECTOR 1",
     "id": "B"
