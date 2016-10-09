@@ -19,6 +19,7 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "officeId")
     private Office office;
+    private String status;
 
     public long getId() {
         return id;
@@ -66,6 +67,14 @@ public class Appointment {
 
     public void setOffice(Office office) {
         this.office = office;
+    }
+
+    public String getStatus() {
+      return status;
+    }
+
+    public void setStatus(String status) {
+      this.status = status;
     }
 
 }
