@@ -24,9 +24,11 @@
         </div>
     </nav>
 
-    <div ng-include="'views/common/reservation_step1.html'" ng-show="step == 1"></div>
-    <div ng-include="'views/common/reservation_step2.html'" ng-show="step == 2"></div>
-    <div ng-include="'views/common/reservation_step3.html'" ng-show="step == 3"></div>
+    <div ng-include="'views/common/reservation/reservation_1_combos.html'" ng-show="step == 1"></div>
+    <div ng-include="'views/common/reservation/reservation_2_month.html'" ng-show="step == 2"></div>
+    <div ng-include="'views/common/reservation/reservation_3_day.html'" ng-show="step == 3"></div>
+    <div ng-include="'views/common/reservation/reservation_4_contact.html'" ng-show="step == 4"></div>
+    <div ng-include="'views/common/reservation/reservation_5_validation.html'" ng-show="step == 5"></div>
 
     <div ui-view=""></div>
 </div>

@@ -1,6 +1,7 @@
 package gov.ithub.dao;
 
 import gov.ithub.model.Appointment;
+import gov.ithub.model.Office;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;
@@ -13,6 +14,8 @@ import javax.transaction.Transactional;
  */
 @Transactional
 public interface AppointmentDao extends CrudRepository<Appointment, Long> {
-	//FIXME: we need to implement a NamedQuery or find a proper name for method.
-//	List<Appointment> findAppointmentsBetweenDates(Date start, Date end);
+  	//FIXME: we need to implement a NamedQuery or find a proper name for method.
+    //List<Appointment> findAppointmentsBetweenDates(Date start, Date end);
+    
+    List<Appointment> findAllByOffice(Office office);
 }

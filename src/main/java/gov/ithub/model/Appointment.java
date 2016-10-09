@@ -36,6 +36,14 @@ public class Appointment {
         this.start = start;
     }
 
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
     public String getName() {
         return name;
     }
@@ -59,12 +67,5 @@ public class Appointment {
     public void setOffice(Office office) {
         this.office = office;
     }
-    
-    public void setEnd(Date end) {
-    	this.end = end;
-    }
-    
-    public Date getEnd() {
-    	return this.end;
-    }
+
 }
