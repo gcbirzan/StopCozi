@@ -52,6 +52,7 @@ public class CitizenController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
         List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName.replaceFirst("/", "") + "%");
+        //
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(services).build();
     }
 
