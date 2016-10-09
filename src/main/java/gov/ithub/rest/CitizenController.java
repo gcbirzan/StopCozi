@@ -1,8 +1,10 @@
 package gov.ithub.rest;
 
 import gov.ithub.dao.AgencyDao;
+import gov.ithub.dao.AppointmentDao;
 import gov.ithub.dao.ServiceDao;
 import gov.ithub.model.Agency;
+import gov.ithub.model.Appointment;
 import gov.ithub.model.FreeSlot;
 import gov.ithub.model.Service;
 import gov.ithub.service.FreeSlotService;
@@ -29,6 +31,9 @@ public class CitizenController {
     private ServiceDao serviceDao;
 
     @Autowired
+    private AppointmentDao appointmentDao;
+
+    @Autowired
     private FreeSlotService freeSlotService;
 
     @GET
@@ -53,5 +58,13 @@ public class CitizenController {
     public Response getFreeSlots(@PathParam("serviceId") Long serviceId) {
         List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, new Date());
         return Response.status(200).entity(freeSlotList).build();
+    }
+
+    @POST
+    @Path("/appointment/{serviceId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createAppointment(@PathParam("serviceId") Long serviceId, Appointment appointment) {
+        appointmentDao.save(appointment);
+        return Response.status(200).entity(appointment.getId()).build();
     }
 }
