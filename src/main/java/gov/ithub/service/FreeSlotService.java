@@ -98,15 +98,14 @@ public class FreeSlotService {
 			
 			//TODO: 1. remove hardcoded values.
 			//2. Possible optimization: remove this slots directly from the iteration process.
-			if (!intervalIsInWorkingHours(slotStartDate, slotEndDate, 10, 20)) {
+			if (!intervalIsInWorkingHours(slotStartDate, slotEndDate, 8, 18)) {
 				continue;
 			}
 			
 			for (Appointment appointment : appointments) {
-				
 				if (appointment.getStart().after(slotEndDate)) {
 					//TODO we could do some more optimizations here, like:
-					//remove the appointments from the appointments array when we passed them. 
+					//remove the appointments from the appointments array when we passed them.
 					break;
 				}
 				
@@ -119,6 +118,7 @@ public class FreeSlotService {
 				FreeSlot slot = new FreeSlot();
 				slot.setStart(slotStartDate);
 				slot.setEnd(slotEndDate);
+				
 				slot.setService(service);
 				freeSlots.add(slot);
 			}
