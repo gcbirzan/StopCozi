@@ -717,7 +717,7 @@ Module.directive('dateTimeAppend', function () {
   };
 });
 
-Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfig', '$parse', 'datePickerUtils', function ($compile, $document, $filter, dateTimeConfig, $parse, datePickerUtils) {
+Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfig', '$parse', 'datePickerUtils', '$timeout', function ($compile, $document, $filter, dateTimeConfig, $parse, datePickerUtils, $timeout) {
   var body = $document.find('body');
   var dateFilter = $filter('mFormat');
 
@@ -743,7 +743,11 @@ Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfi
           eventIsForPicker = datePickerUtils.eventIsForPicker,
           dateChange = null,
           shownOnce = false,
-          template;
+          template,
+          forceOpen = attrs.forceOpen ? $parse(attrs.forceOpen)(scope) : dateTimeConfig.forceOpen,
+          preventClose = attrs.preventClose ? $parse(attrs.preventClose)(scope) : dateTimeConfig.preventClose,
+          hideInput = attrs.hideInput ? $parse(attrs.hideInput)(scope) : dateTimeConfig.hideInput
+      ;
 
       if (index === -1) {
         views.splice(index, 1);
@@ -823,6 +827,10 @@ Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfi
       }
 
       function clear() {
+        if (preventClose) {
+          return;
+        }
+
         if (picker) {
           picker.remove();
           picker = null;
@@ -880,6 +888,7 @@ Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfi
         picker = $compile(template)(scope);
         scope.$digest();
 
+
         //If the picker has already been shown before then we shouldn't be binding to events, as these events are already bound to in this scope.
         if (!shownOnce) {
           scope.$on('setDate', function (event, date, view) {
@@ -911,6 +920,10 @@ Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfi
         } else {
           // relative
           container = angular.element('<div date-picker-wrapper></div>');
+          if (forceOpen && preventClose) {
+            container.css({position: 'relative', width: '270px', display: 'inline-block'});
+            picker.css({position: 'relative'});
+          }
           element[0].parentElement.insertBefore(container[0], element[0]);
           container.append(picker);
           //          this approach doesn't work
@@ -922,8 +935,16 @@ Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfi
         });
       }
 
+      if (hideInput) {
+        element.hide();
+      }
+
       element.bind('focus', showPicker);
       element.bind('blur', clear);
+
+      if (forceOpen) {
+        $timeout(showPicker);
+      }
       getTemplate();
     }
   };
