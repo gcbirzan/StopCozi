@@ -134,7 +134,6 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             });
 
         $scope.refreshCounties = function(search) {
-            $scope.data.county = {};
             $scope.counties = [];
             $scope.data.agency = {};
             $scope.agencies = [];
@@ -285,7 +284,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                         toastr.success(translationFactory.translate('common.reservation|Rezervre programata. Veti primi un SMS de confirmare.'));
                         $state.go('common.landing');
                     } else {
-                        toastr.error(translationFactory.translate('common.reservation|Validarea a eşuat!'));
+                        toastr.error(translationFactory.translate('common.reservation|Rezervarea a eşuat!'));
                     }
                 });
         };

@@ -15,7 +15,7 @@ angular.extend(_CONFIG, {
     development: false, // set the development flag
     showTranslationKeys: false,
     baseUrl: '', // the base URL
-    apiUrl: 'http://193.230.8.27:31080', // the API base URL
+    apiUrl: '/api', // the API base URL
     applicationName: 'StopCozi',
     applicationMail: 'info@stopcozi.ro',
     logoName: 'StopCozi',
