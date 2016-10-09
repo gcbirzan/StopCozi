@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,19 +40,20 @@ public class CitizenController {
     private AppointmentService appointmentService;
 
     @GET
-    @Path("/agencies/{location}/{name}")
+    @Path("/agencies/{location}{name :(/\\w+)?}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAgencies(@PathParam("location") String location, @PathParam("name") String name) {
-        List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name + "%");
-        return Response.status(200).entity(agencies).build();
+    public Response getAgencies(@PathParam("location") String location, @PathParam("name")  String name) {
+        List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name.replaceFirst("/", "") + "%");
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(agencies).build();
     }
 
     @GET
-    @Path("/services/{agencyId}/{serviceName}")
+    @Path("/services/{agencyId}{serviceName :(/\\w+)?}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
-        List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName + "%");
-        return Response.status(200).entity(services).build();
+        List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName.replaceFirst("/", "") + "%");
+        //
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(services).build();
     }
 
     @GET
