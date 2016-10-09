@@ -1,4 +1,5 @@
 #!/bin/bash
+git pull
 tmux kill-session -t stopcozi
 tmux new -d -s stopcozi
 tmux send -t stopcozi "mvn clean install" ENTER

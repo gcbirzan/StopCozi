@@ -3,8 +3,6 @@ var CommonLandingController = ['$controller', '$scope', '$rootScope', '$state', 
         $controller('ParentController', {$scope: $scope});
 
         $rootScope.pageTitle = translationFactory.translate('common.landing.title|Bine ai venit');
-
-
     }
 ];
 
@@ -14,7 +12,7 @@ angular
     .config(['$stateProvider', 'CONFIG', function($stateProvider, CONFIG) {
         $stateProvider
             .state('common.landing', {
-                url: '^/common/landing',
+                url: '^/landing',
                 templateUrl: CONFIG.apiUrlFactory('views/common/landing.html')
             });
     }])
