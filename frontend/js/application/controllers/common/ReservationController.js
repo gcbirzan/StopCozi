@@ -1,7 +1,6 @@
-var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory', '$stateParams', 'toastr',
-    function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory, $stateParams, toastr) {
-        //$controller('ParentController', {$scope: $scope});
-        $controller('CommonReservationValidationController', {$scope: $scope});
+var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory', '$stateParams', 'toastr','SweetAlert',
+    function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory, $stateParams, toastr, SweetAlert) {
+        $controller('ParentController', {$scope: $scope});
 
         $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Rezervare');
 
@@ -217,7 +216,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
                 $http
                     .get(
-                        !fakeApi ? apiUrlFactory('/freeslots', true) + '/' + encodeURIComponent($scope.data.service.id)
+                        !fakeApi ? apiUrlFactory('/freeslots', true) + '/' + encodeURIComponent($scope.data.service.id) + '/' + moment().get('year') + '/' + (moment().get('month') + 1)
                         : apiUrlFactory('data/freeslots.json')
                     )
                     .then(function (response) {
@@ -265,6 +264,27 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                     }
 
                     if (response.data.status !== 'OK') {
+                        toastr.error(translationFactory.translate('common.reservation|Validarea a eşuat!'));
+                    }
+                });
+        };
+
+        $scope.bookReservation = function() {
+            $http
+                .post(
+                    !fakeApi ? apiUrlFactory('/appointment', true) + '/' + encodeURIComponent($scope.data.service.id)
+                        : apiUrlFactory('data/appointment.json'),
+                    {
+                        start: $scope.data.time,
+                        name: $scope.data.name,
+                        phone: $scope.data.mobile
+                    }
+                )
+                .then(function (response) {
+                    if (response.data && response.data.id) {
+                        toastr.success(translationFactory.translate('common.reservation|Rezervre programata. Veti primi un SMS de confirmare.'));
+                        $state.go('common.landing');
+                    } else {
                         toastr.error(translationFactory.translate('common.reservation|Validarea a eşuat!'));
                     }
                 });
