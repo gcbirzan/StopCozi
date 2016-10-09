@@ -103,6 +103,7 @@ public class FreeSlotService {
 			}
 			
 			for (Appointment appointment : appointments) {
+				
 				if (appointment.getStart().after(slotEndDate)) {
 					//TODO we could do some more optimizations here, like:
 					//remove the appointments from the appointments array when we passed them. 
