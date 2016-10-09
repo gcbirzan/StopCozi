@@ -1,21 +1,19 @@
 package gov.ithub.dao;
 
 import gov.ithub.model.Appointment;
-import gov.ithub.model.Office;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 /**
  * Created by claudiubar on 10/8/2016.
  */
 @Transactional
 public interface AppointmentDao extends CrudRepository<Appointment, Long> {
-  	//FIXME: we need to implement a NamedQuery or find a proper name for method.
-    //List<Appointment> findAppointmentsBetweenDates(Date start, Date end);
-    
-    List<Appointment> findAllByOffice(Office office);
+
+    @Query("select a from Appointment a where a.office.service.id = ?1 and a.start >= ?2 and a.end <= ?3")
+    List<Appointment> getAppointmentsForService(Long serviceId, Date start, Date end);
 }

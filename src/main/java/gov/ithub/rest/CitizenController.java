@@ -1,12 +1,12 @@
 package gov.ithub.rest;
 
 import gov.ithub.dao.AgencyDao;
-import gov.ithub.dao.AppointmentDao;
 import gov.ithub.dao.ServiceDao;
 import gov.ithub.model.Agency;
 import gov.ithub.model.Appointment;
 import gov.ithub.model.FreeSlot;
 import gov.ithub.model.Service;
+import gov.ithub.service.AppointmentService;
 import gov.ithub.service.FreeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by claudiubar on 10/8/2016.
@@ -31,10 +32,10 @@ public class CitizenController {
     private ServiceDao serviceDao;
 
     @Autowired
-    private AppointmentDao appointmentDao;
+    private FreeSlotService freeSlotService;
 
     @Autowired
-    private FreeSlotService freeSlotService;
+    private AppointmentService appointmentService;
 
     @GET
     @Path("/agencies/{location}/{name}")
@@ -64,7 +65,9 @@ public class CitizenController {
     @Path("/appointment/{serviceId}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAppointment(@PathParam("serviceId") Long serviceId, Appointment appointment) {
-        appointmentDao.save(appointment);
-        return Response.status(200).entity(appointment.getId()).build();
+        Optional<Appointment> savedAppointment = appointmentService.createAppointment(serviceId, appointment);
+        return savedAppointment.isPresent() ?
+            Response.status(200).entity("Mergeti cu incredere la ghiseul " + appointment.getOffice().getName()).build() :
+            Response.status(400).entity("Alcineva dorind sa rezerve in acelasi timp a reusit inaintea dv.").build();
     }
 }
