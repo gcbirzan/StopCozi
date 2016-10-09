@@ -1,10 +1,13 @@
 <div class="container">
-    <h1 class="title">Programeaza-ti acum o vizita la ghiseu.</h1>
+    <h1 class="title">Te rog, confirmă-ţi rezervarea</h1>
     <div class="row search-row animated fadeInUp">
-        Form
+        <input type="text" ng-model="data.validationCode" value="" placeholder="{{ 'reservation.step5|CodValidare' | translate }}" />
     </div>
 </div>
 <div class="row center">
+    &nbsp;
+</div>
+<div class="row center">
     <a ui-sref="common.reservation.step({step: '4'})" class="btn btn-primary">{{ 'common.reservations|Anterior' | translate }}</a>
-    <a ng-click="requestReservation()" class="btn btn-primary" ng-show="reservationEnabled">{{ 'common.reservations|Rezervare' | translate }}</a>
+    <a ng-click="endReservation()" class="btn btn-primary" ng-show="reservationEnabled">{{ 'common.reservations|Rezervare' | translate }}</a>
 </div>
