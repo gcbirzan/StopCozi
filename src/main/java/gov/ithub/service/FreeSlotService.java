@@ -78,6 +78,11 @@ public class FreeSlotService {
     	Date endDate = getLastDayOfMonth(startDate);
     	
     	Service service = serviceDao.findById(serviceId);
+    	
+    	if (service == null) {
+    		return null;
+    	}
+    	
     	List<Appointment> appointments = appointmentDao.getAppointmentsForService(serviceId, startDate, endDate);
     	ArrayList<Office> offices  = (ArrayList<Office>) officeDao.findByServiceId(serviceId);
     	
