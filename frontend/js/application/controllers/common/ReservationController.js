@@ -156,7 +156,6 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         }
 
         $scope.refreshAgencies = function(search) {
-            $scope.data.agency = {};
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
@@ -184,7 +183,6 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         }
 
         $scope.refreshServices = function(search) {
-            $scope.data.service = {};
             $scope.services = [];
             $scope.data.date = '';
             $scope.data.time = '';
