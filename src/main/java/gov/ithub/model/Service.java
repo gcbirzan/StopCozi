@@ -33,6 +33,10 @@ public class Service {
         this.name = name;
     }
 
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
     public Agency getAgency() {
         return agency;
     }

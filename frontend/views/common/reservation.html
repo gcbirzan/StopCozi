@@ -1,0 +1,32 @@
+<div ng-controller="CommonReservationController as common_reservation" class="ng-hide" ng-show="true">
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            <a href ui-sref="info" class="navbar-brand">StopCozi</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Despre proiect</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div ng-include="'views/common/reservation_step1.html'" ng-show="step == 1"></div>
+    <div ng-include="'views/common/reservation_step2.html'" ng-show="step == 2"></div>
+    <div ng-include="'views/common/reservation_step3.html'" ng-show="step == 3"></div>
+
+    <div ui-view=""></div>
+</div>

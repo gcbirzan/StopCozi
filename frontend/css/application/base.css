@@ -1,0 +1,313 @@
+.ui-jqgrid .ui-pg-input {
+    height: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.ui-jqgrid .ui-pg-selbox {
+    padding: 0;
+    height: 20px;
+}
+
+.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-jqgrid-bdiv {
+    overflow: hidden;
+}
+
+.control-label.required:after {
+    content: "*";
+    color: red;
+    margin-left: 2px;
+}
+
+.transparentLogin{
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+}
+.transparentLogin input,
+.transparentLogin select,
+.transparentLogin button,
+.transparentLogin button,
+.transparentLogin img,
+.transparentLogin p,
+.transparentLogin h1,
+.transparentLogin h2,
+.transparentLogin h3 {
+    opacity: 0.9;
+}
+.transparentLogin input,
+.transparentLogin select{
+    background-color: transparent;
+    border: 1px solid #c9cacb;
+    color: #676a6c;
+}
+
+/* wizard tab panel */
+.wizard > .content > .body{
+    float: none;
+    height: auto;
+    width: auto;
+    position: static;
+}
+.wizard-big.wizard > .content{
+    min-height: 0;
+}
+
+.list-group-border li:last-child{
+    border-bottom: 1px solid #e7eaec;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.row-company-view-info .ibox .ibox-content{
+    position: relative;
+    height: 243px;
+}
+.row-company-view-info .ibox .ibox-content .btn-edit{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.row-company-view-info-sub [class*="col-"]{
+    height: 228px;
+}
+.row-employee-view-info .ibox .ibox-content{
+    height: 167px;
+}
+
+.row-contract-add-by-box .ibox .ibox-content{
+    height: 205px;
+}
+
+/*.baseAuthWrapper{
+    height: 100vh;
+    text-align: center;
+}*/
+
+.baseAuthWrapper .align-helper{
+    display: inline-block;
+    float: none;
+    height: 100%;
+    vertical-align: middle;
+}
+
+/*.baseAuthWrapper .align-helper ~ div{
+    display: inline-block;
+    float: none;
+    vertical-align: middle;
+}*/
+
+.filter-button-inline-wrapper{
+    padding-top: 18px;
+}
+.filter-button-inline-wrapper .btn{
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.ui-jqgrid .ui-pg-button:hover {
+    padding: 0 5px;
+}
+
+.wrapper-logo{
+    height: 95px;
+    text-align: right;
+    position: relative;
+
+    white-space: nowrap;
+    text-align: center;
+}
+.wrapper-logo img{
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 95px;
+}
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.logo-upload{
+    position: absolute;
+    bottom: 10px; left: -20px;
+    cursor: pointer;
+}
+
+.p-b-none{
+    padding-bottom: 0;
+}
+
+.inline-checkbox,
+.inline-radio{
+    display: inline-block;
+    line-height: 25px;
+    margin-right: 25px;
+}
+
+.short-btn{
+    padding: 6px 7px;
+}
+
+.register-popup,
+.register-more-info-popup{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    width:500px;
+}
+
+.register-more-info-popup{
+    bottom: 200px;
+
+}
+
+.btn-addon,
+.btn-addon:hover,
+.btn-addon:focus,
+.btn-addon.active,
+.btn-addon.active:focus,
+.btn-addon.focus,
+.btn-addon.focus:active
+{
+    background: #fff;
+    border: 1px solid #e5e6e7;
+    outline: 0;
+    color: inherit;
+    cursor: text;
+}
+
+.img-logo-user{
+    width: 48px;
+    height: 48px;
+}
+
+.date-picker-date-time{
+    border: solid 2px #1ab394;
+}
+
+.table > thead > tr > td.background.active,
+.table > tbody > tr > td.background.active,
+.table > tfoot > tr > td.background.active,
+.table > thead > tr > th.background.active,
+.table > tbody > tr > th.background.active,
+.table > tfoot > tr > th.background.active,
+.table > thead > tr.active > td.background,
+.table > tbody > tr.active > td.background,
+.table > tfoot > tr.active > td.background,
+.table > thead > tr.active > th.background,
+.table > tbody > tr.active > th.background,
+.table > tfoot > tr.active > th.background {
+    background-color: #f5f5f5 !important;
+}
+
+.text-sm{
+    font-size: 80%;
+}
+.text-md{
+    font-size: 100%;
+}
+.text-lg{
+    font-size: 120%;
+}
+.text-h{
+    font-size: 140%;
+}
+
+/* ++core-js-list*/
+.core-js-list{
+    position: relative;
+}
+.core-js-list .core-js-list-data{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.core-js-list .core-js-list-data-scroll{
+    overflow-y: scroll;
+    padding-right: 20px;
+}
+.core-js-list .core-js-list-pagination{
+    margin-top: 20px;
+}
+.core-js-list .core-js-list-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url('/img/ajax-loader.gif') center no-repeat;
+    background-color: rgba(51, 51, 51, 0.1);
+    z-index: 1;
+}
+.core-js-list .core-js-list-no-rows{
+    color: #8a6d3b;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+}
+/* --core-js-list*/
+
+/* responsive */
+@media only screen and (max-width : 1199px) {
+    .row-company-view-info .ibox .ibox-content,
+    .row-company-view-info-sub [class*="col-"],
+    .row-contract-view-info .ibox .ibox-content
+    {
+        height: auto;
+    }
+
+    .row-company-view-info .ibox .ibox-content .btn-edit{
+        position: static;
+        float: right;
+    }
+}
+
+.modal-dialog {
+    overflow: visible !important;
+}
+
+.wizardscreen .wizard_hidden{
+    overflow: hidden;
+    padding: 0;
+}
+.wizardscreen .wizard_hidden > *{
+    opacity: 0;
+    position: absolute;
+}
+
+.wizardscreen .highlighted a,
+.wizardscreen .highlighted a:hover{
+    background: green;
+}
+
+.wizardscreen .metismenu .highlighted a,
+.wizardscreen .metismenu.highlighted a:hover{
+    background: lightgreen;
+}
+
+.wizardscreen .wizard-promotion-list li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.wizardscreen .modal-backdrop {
+    display: none;
+}
+
+.wizardscreen .modal-dialog {
+    width: 100%;
+}
+
+.wizardscreen .modal {
+    position: relative;
+}
+
+.wizardscreen .modal-content {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+.wizardscreen .modal-content h2{
+    display: none;
+}
