@@ -9,4 +9,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ServiceDao extends CrudRepository<Service, Long> {
     Service findByAgency(Agency agency);
+    Service findByAgencyAndNameLike(Agency agency, String name);
 }
