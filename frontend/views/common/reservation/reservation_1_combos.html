@@ -6,7 +6,7 @@
         <div class="col-lg-4 col-sm-4 search-col relative locationicon">
             <ui-select ng-model="data.county"  on-select="refreshAgencies('')">
                 <ui-select-match placeholder="{{ 'reservation.step1|Județ' | translate }}">
-                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Judet' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
+                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Județ' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
                 </ui-select-match>
                 <ui-select-choices repeat="option in counties" refresh="refreshCounties($select.search)" refresh-delay="250">
                     <div title="{{ option.name }}">{{ option.name }}</div>
@@ -18,7 +18,7 @@
         <div class="col-lg-4 col-sm-4 search-col relative">
             <ui-select ng-model="data.agency"  on-select="refreshServices('')">
                 <ui-select-match placeholder="{{ 'reservation.step1|Agenție' | translate }}">
-                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Agentie' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
+                    {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Agenție' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
                 </ui-select-match>
                 <ui-select-choices repeat="option in agencies" refresh="refreshAgencies($select.search)" refresh-delay="250">
                     <div title="{{ option.name }}">{{ option.name }}</div>
