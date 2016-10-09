@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +35,10 @@ public class ClerkController {
     @Path("/appointments/{officeId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAppointments(@PathParam("officeId") Long officeId) throws ParseException {
-      List<Appointment> appointmentList = appointmentDao.findAllByOffice(officeDao.findOne(officeId));
+      Office office = officeDao.findOne(officeId);
+      Date start = new Calendar.Builder().setDate(2016, 10, 9).setTimeOfDay(0, 0, 0).build().getTime();
+      Date end = new Calendar.Builder().setDate(2016, 10, 10).setTimeOfDay(0, 0, 0).build().getTime();
+      List<Appointment> appointmentList = appointmentDao.getAppointmentsForService(office.getService().getId(), start, end);
       return Response.status(200).entity(appointmentList).build();
     }
 
