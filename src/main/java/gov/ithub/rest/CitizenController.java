@@ -10,6 +10,7 @@ import gov.ithub.service.AppointmentService;
 import gov.ithub.service.FreeSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -39,21 +40,24 @@ public class CitizenController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @CrossOrigin(origins = "*")
     @GET
     @Path("/agencies/{location}{name :(/\\w+)?}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAgencies(@PathParam("location") String location, @PathParam("name")  String name) {
         List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name.replaceFirst("/", "") + "%");
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(agencies).build();
+        List<Agency> responseList = agencies.size() > 20 ? agencies.subList(0,20) : agencies;
+        return Response.status(200)/*.header("Access-Control-Allow-Origin", "*")*/.entity(responseList).build();
     }
 
+    @CrossOrigin(origins = "*")
     @GET
     @Path("/services/{agencyId}{serviceName :(/\\w+)?}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
         List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName.replaceFirst("/", "") + "%");
-        //
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(services).build();
+        List<Service> responseList = services.size() > 20 ? services.subList(0,20) : services;
+        return Response.status(200)/*.header("Access-Control-Allow-Origin", "*")*/.entity(responseList).build();
     }
 
     @GET
