@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="title">Programeaza-ti acum o vizita la ghiseu</h1>
     <p>Selecteaza un interval orar disponibil</p>
-    <div class="row search-row" style="height:340px; overflow-y:scroll;">
+    <div class="row search-row" style="height:270px; overflow-y:scroll;">
         <ul class="list-group" ng-repeat="time in times"> <li class="list-group-item" ng-class="[{active: data.time == time.id}]" ng-click="checkStep4(time.id)">{{ time.name }}</li> </ul>
     </div>
 </div>
