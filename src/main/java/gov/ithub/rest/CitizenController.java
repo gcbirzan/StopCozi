@@ -81,10 +81,12 @@ public class CitizenController {
     @POST
     @Path("/appointment/{serviceId}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createAppointment(@PathParam("serviceId") Long serviceId, Appointment appointment) {
+    	
         Optional<Appointment> savedAppointment = appointmentService.createAppointment(serviceId, appointment);
         return savedAppointment.isPresent() ?
             Response.status(200).entity(appointment).build() :
-            Response.status(400).entity("Alcineva dorind sa rezerve in acelasi timp a reusit inaintea dv.").build();
+            Response.status(400).entity("{}").build();
     }
 }
