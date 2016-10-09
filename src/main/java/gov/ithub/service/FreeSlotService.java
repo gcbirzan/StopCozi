@@ -42,11 +42,28 @@ public class FreeSlotService {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+		c.set(Calendar.HOUR_OF_DAY, 23);
 		return c.getTime();
 	}
 	
-	private static boolean intervalsAreEqual(Date start1, Date end1, Date start2, Date end2) {
+	private boolean intervalsAreEqual(Date start1, Date end1, Date start2, Date end2) {
 		return start1.equals(start2) && end1.equals(end2);
+	}
+	
+	private boolean intervalIsInWorkingHours(Date start, Date end, Integer workIntervalStart, Integer workIntervalEnd) {
+		Calendar calendarStart = Calendar.getInstance();
+		Calendar calendarEnd = Calendar.getInstance();
+		calendarStart.setTime(start);
+		calendarEnd.setTime(end);
+		
+		if (calendarStart.get(Calendar.HOUR_OF_DAY) >= workIntervalStart && 
+				calendarStart.get(Calendar.HOUR_OF_DAY) < workIntervalEnd &&
+				calendarEnd.get(Calendar.HOUR_OF_DAY) >= workIntervalStart && 
+				calendarEnd.get(Calendar.HOUR_OF_DAY) < workIntervalEnd) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
@@ -73,6 +90,12 @@ public class FreeSlotService {
 			Date slotStartDate = addSecondsToDate(startDate, i * duration);
 			Date slotEndDate = addSecondsToDate(startDate, ((i + 1) * duration));
 			int numberOfFreeOffices = offices.size();
+			
+			//TODO: 1. remove hardcoded values.
+			//2. Possible optimization: remove this slots directly from the iteration process.
+			if (!intervalIsInWorkingHours(slotStartDate, slotEndDate, 8, 18)) {
+				continue;
+			}
 			
 			for (Appointment appointment : appointments) {
 				if (appointment.getStart().after(slotEndDate)) {
