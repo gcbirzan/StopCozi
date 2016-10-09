@@ -1,11 +1,11 @@
 <div class="container">
-    <h1 class="title">Programeaza-ti acum o vizita la ghiseu</h1>
-    <p>Selectati Judetul, Agentia si Serviciul de care aveti nevoie</p>
+    <h1 class="title">Programează-ți acum o vizită la ghișeu</h1>
+    <p>Selectați Județul, Agenția și Serviciul de care aveți nevoie</p>
 
     <div class="row search-row">
         <div class="col-lg-4 col-sm-4 search-col relative locationicon">
             <ui-select ng-model="data.county"  on-select="refreshAgencies('')">
-                <ui-select-match placeholder="{{ 'reservation.step1|Judet' | translate }}">
+                <ui-select-match placeholder="{{ 'reservation.step1|Județ' | translate }}">
                     {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Judet' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
                 </ui-select-match>
                 <ui-select-choices repeat="option in counties" refresh="refreshCounties($select.search)" refresh-delay="250">
@@ -17,7 +17,7 @@
         </div>
         <div class="col-lg-4 col-sm-4 search-col relative">
             <ui-select ng-model="data.agency"  on-select="refreshServices('')">
-                <ui-select-match placeholder="{{ 'reservation.step1|Agentie' | translate }}">
+                <ui-select-match placeholder="{{ 'reservation.step1|Agenție' | translate }}">
                     {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Agentie' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
                 </ui-select-match>
                 <ui-select-choices repeat="option in agencies" refresh="refreshAgencies($select.search)" refresh-delay="250">
@@ -42,5 +42,5 @@
     </div>
 </div>
 <div class="row center">
-    <a ui-sref="common.reservation.step({step: '2'})" class="btn btn-primary" ng-show="step2Enabled">{{ 'common.reservations|Pasul Urmator' | translate }}</a>
+    <a ui-sref="common.reservation.step({step: '2'})" class="btn btn-primary" ng-show="step2Enabled">{{ 'common.reservations|Pasul următor' | translate }}</a>
 </div>
