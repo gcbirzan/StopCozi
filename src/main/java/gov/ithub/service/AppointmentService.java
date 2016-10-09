@@ -45,7 +45,8 @@ public class AppointmentService {
     }
 
     private String getSMSContent(String name, String service, String data, long code) {
-    	return "Vesti bune" + name + ", programarea Dvoastra la " + service + " pe data de " + data + " este confirmata. Codul programarii este " + code + ".";
+    	String test = "Programarea dvs la " + service + " pe " + data + " este confirmata. Codul programarii este " + code + ".";
+    	return test;
     }
 
     private void sendSMS(String message, String to, String from) throws Exception {
@@ -53,7 +54,7 @@ public class AppointmentService {
         String apiSecret = System.getenv(SMS_SERVICE_API_SECRET_ENV);
         String apiKey = System.getenv(SMS_SERVICE_API_KEY_ENV);
         String urlString = "https://rest.nexmo.com/sms/json?api_key=" + apiKey + "&api_secret=" + apiSecret + "&from=" + from + "&to=" + to + "&text=" + URLEncoder.encode(message, "UTF-8");
-
+        
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -88,6 +89,7 @@ public class AppointmentService {
             		Appointment app = createdAppointment.get();
             		sendSMS(getSMSContent(app.getName(), service.getName(), formatDate(app.getStart()), app.getId()), app.getPhone(), "StopCozi");
             	} catch (Exception e) {
+            		System.out.println("Error "+ e);
                 // TODO: treat exception.
             	}
             	return createdAppointment;
