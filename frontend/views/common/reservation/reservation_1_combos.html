@@ -27,7 +27,7 @@
             <!--<input type="text" name="institution" class="form-control has-icon" placeholder="Institutie">-->
         </div>
         <div class="col-lg-4 col-sm-4 search-col relative">
-            <ui-select ng-model="data.service"  on-select="checkStep2()">
+            <ui-select ng-model="data.service"  on-select="refreshSlots()">
                 <ui-select-match placeholder="{{ 'reservation.step1|Serviciu' | translate }}">
                     {{ $select.selected && $select.selected.id ? '' : 'reservation.step1|Serviciu' | translate }}{{ $select.selected && $select.selected.id ? $select.selected.name : '' }}
                 </ui-select-match>
