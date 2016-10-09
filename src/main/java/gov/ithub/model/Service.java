@@ -15,6 +15,7 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "agencyId")
     private Agency agency;
+    private long duration;
 
     public long getId() {
         return id;
@@ -39,4 +40,12 @@ public class Service {
     public void setAgency(Agency agency) {
         this.agency = agency;
     }
+    
+    public long getDuration() {
+		return duration;
+	}
+    
+    public void setDuration(long duration) {
+		this.duration = duration;
+	}
 }

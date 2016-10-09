@@ -1,6 +1,7 @@
 package gov.ithub.rest;
 
 import gov.ithub.dao.AgencyDao;
+import gov.ithub.dao.AppointmentDao;
 import gov.ithub.model.Agency;
 import gov.ithub.model.FreeSlot;
 import gov.ithub.service.FreeSlotService;
@@ -22,7 +23,7 @@ public class CitizenController {
 
     @Autowired
     private AgencyDao agencyDao;
-
+    
     @Autowired
     private FreeSlotService freeSlotService;
 
