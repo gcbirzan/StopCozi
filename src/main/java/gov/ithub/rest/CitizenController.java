@@ -61,10 +61,14 @@ public class CitizenController {
     }
 
     @GET
-    @Path("/freeslots/{serviceId}")
+    @Path("/freeslots/{serviceId}/{year}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFreeSlots(@PathParam("serviceId") Long serviceId) {
-        List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, new Date());
+    public Response getFreeSlots(@PathParam("serviceId") Long serviceId, @PathParam("year") Integer year, @PathParam("month") Integer month) {
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.set(Calendar.MONTH, month);
+    	calendar.set(Calendar.YEAR, year);
+    	
+        List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, calendar.getTime());
         return Response.status(200).entity(freeSlotList).build();
     }
 
