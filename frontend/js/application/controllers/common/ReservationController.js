@@ -143,6 +143,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.data.date = '';
             $scope.data.time = '';
             $scope.freeslots = [];
+            $scope.times = [];
 
             angular.forEach($scope.countiesBase, function(county) {
                 if (county.name.toLowerCase().indexOf(search.toLowerCase()) != -1) {
@@ -188,6 +189,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.data.date = '';
             $scope.data.time = '';
             $scope.freeslots = [];
+            $scope.times = [];
 
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
                 $http
@@ -319,6 +321,14 @@ angular
             .state('common.reservation.step', {
                 url: '^/reservation/:step',
                 template: '<div ui-view=""></div>'
+            })
+            .state('common.adminlist', {
+                url: '^/admin',
+                templateUrl: CONFIG.apiUrlFactory('views/common/admin/admin-reservation-list.html')
+            })
+            .state('common.adminsingle', {
+                url: '^/admin-reservation',
+                templateUrl: CONFIG.apiUrlFactory('views/common/admin/admin-reservation-single.html')
             })
         ;
     }])
