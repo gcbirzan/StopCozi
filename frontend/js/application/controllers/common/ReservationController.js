@@ -155,7 +155,7 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
         $scope.endReservation = function() {
             $http
-                .get(apiUrlFactory('data/validation.json?validationCode=' + encodeURIComponent($scope.data.validationCode)))
+                .post(apiUrlFactory('data/validation.json?validationCode=' + encodeURIComponent($scope.data.validationCode)))
                 .then(function (response) {
                     if (response.data && response.data.status && response.data.status === 'OK') {
                         toastr.success('Booking ID: ' + response.data.bookingId);
