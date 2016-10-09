@@ -1,8 +1,11 @@
 var CommonReservationController = ['$controller', '$scope', '$rootScope', '$state', 'CONFIG', '$http', 'apiUrlFactory', 'aclFactory', 'translationFactory', '$stateParams', 'toastr',
     function ($controller, $scope, $rootScope, $state, CONFIG, $http, apiUrlFactory, aclFactory, translationFactory, $stateParams, toastr) {
-        $controller('ParentController', {$scope: $scope});
+        //$controller('ParentController', {$scope: $scope});
+        $controller('CommonReservationValidationController', {$scope: $scope});
 
         $rootScope.pageTitle = translationFactory.translate('common.reservation.title|Rezervare');
+
+        $scope.data = {};
 
         $scope.step2Enabled = false;
         $scope.step3Enabled = true;
@@ -52,7 +55,15 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             cancelStateChangeHandler();
         });
 
-        $scope.data = {};
+
+        $scope.checkStep2 = function() {
+            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
+                // TODO: fetch the slots
+                $scope.step2Enabled = true;
+            } else {
+                $scope.step2Enabled = false;
+            }
+        }
 
         $http
             .get(apiUrlFactory('data/counties.json'))
@@ -73,6 +84,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
+            $scope.data.date = {};
+            $scope.data.time = {};
+            $scope.freeslots = [];
 
             angular.forEach($scope.countiesBase, function(county) {
                 if (county.name.toLowerCase().indexOf(search.toLowerCase()) != -1) {
@@ -91,6 +105,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
+            $scope.data.date = {};
+            $scope.data.time = {};
+            $scope.freeslots = [];
 
             if($scope.data.county && $scope.data.county.id) {
                 $http
@@ -111,6 +128,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $scope.refreshServices = function(search) {
             $scope.data.service = {};
             $scope.services = [];
+            $scope.data.date = {};
+            $scope.data.time = {};
+            $scope.freeslots = [];
 
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
                 $http
@@ -128,13 +148,9 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.checkStep2();
         }
 
-        $scope.checkStep2 = function() {
-            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
-                // TODO: fetch the slots
-                $scope.step2Enabled = true;
-            } else {
-                $scope.step2Enabled = false;
-            }
+        $scope.refreshSlots = function() {
+            $scope.checkStep2();
+
         }
     }
 ];
