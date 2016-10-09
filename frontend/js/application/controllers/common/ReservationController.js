@@ -8,10 +8,12 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $scope.data = {};
 
         $scope.step2Enabled = false;
-        $scope.step3Enabled = true;
-        $scope.step4Enabled = true;
-        $scope.step5Enabled = true;
-        $scope.reservationEnabled = true;
+        $scope.step3Enabled = false;
+        $scope.step4Enabled = false;
+        $scope.step5Enabled = false;
+        $scope.reservationEnabled = false;
+
+        $scope.minDate = moment();
 
         var checkStep = function () {
             $scope.step = 0;
@@ -35,10 +37,10 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
 
             if (
                 false
-                //$scope.step >= 2 && (!$scope.data || !$scope.data.county.id || !$scope.data.agency.id || !$scope.data.service.id)
-                //|| $scope.step >= 3 && (!$scope.data || !$scope.data.date)
-                //|| $scope.step >= 4 && (!$scope.data || !$scope.data.time)
-                //|| $scope.step >= 5 && (!$scope.data || !$scope.data.name || !$scope.data.mobile)
+                || $scope.step >= 2 && (!$scope.data || !$scope.data.county || !$scope.data.county.id || !$scope.data.agency || !$scope.data.agency.id || !$scope.data.service || !$scope.data.service.id)
+                || $scope.step >= 3 && (!$scope.data || !$scope.data.date || !$scope.times || !$scope.times.length)
+                || $scope.step >= 4 && (!$scope.data || !$scope.data.time)
+                || $scope.step >= 5 && (!$scope.data || !$scope.data.name || !$scope.data.mobile)
             ) {
                 $state.go('common.reservation')
             }
@@ -65,6 +67,23 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             }
         }
 
+        $scope.checkStep3 = function() {
+            if($scope.data.date && $scope.times && $scope.times.length) {
+                $scope.step3Enabled = true;
+            } else {
+                $scope.step3Enabled = false;
+            }
+        }
+
+        $scope.checkStep4 = function(time) {
+            $scope.data.time = time;
+            if($scope.data.time) {
+                $scope.step4Enabled = true;
+            } else {
+                $scope.step4Enabled = false;
+            }
+        }
+
         $http
             .get(apiUrlFactory('data/counties.json'))
             .then(function (response) {
@@ -84,8 +103,8 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
-            $scope.data.date = {};
-            $scope.data.time = {};
+            $scope.data.date = '';
+            $scope.data.time = '';
             $scope.freeslots = [];
 
             angular.forEach($scope.countiesBase, function(county) {
@@ -105,13 +124,16 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
             $scope.agencies = [];
             $scope.data.service = {};
             $scope.services = [];
-            $scope.data.date = {};
-            $scope.data.time = {};
+            $scope.data.date = '';
+            $scope.data.time = '';
             $scope.freeslots = [];
 
             if($scope.data.county && $scope.data.county.id) {
                 $http
-                    .get(apiUrlFactory('data/agencies.json?county=' + encodeURIComponent($scope.data.county.id) + '&search=' + encodeURIComponent(search)))
+                    .get(
+                        //apiUrlFactory('/agencies', true) + '/' + encodeURIComponent($scope.data.county.id) + (search ? '/' + encodeURIComponent(search) : '')
+                        apiUrlFactory('data/agencies.json')
+                    )
                     .then(function (response) {
                         if (response.data && response.data.agencies) {
                             $scope.agencies = response.data.agencies;
@@ -128,13 +150,13 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $scope.refreshServices = function(search) {
             $scope.data.service = {};
             $scope.services = [];
-            $scope.data.date = {};
-            $scope.data.time = {};
+            $scope.data.date = '';
+            $scope.data.time = '';
             $scope.freeslots = [];
 
             if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id) {
                 $http
-                    .get(apiUrlFactory('data/services.json?county=' + encodeURIComponent($scope.data.county.id) + '&agency=' + encodeURIComponent($scope.data.agency.id) + '&search=' + encodeURIComponent(search)))
+                    .get(apiUrlFactory('data/services.json') + '?agency=' + encodeURIComponent($scope.data.agency.id) + '&search=' + encodeURIComponent(search))
                     .then(function (response) {
                         if (response.data && response.data.services) {
                             $scope.services = response.data.services;
@@ -151,11 +173,46 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
         $scope.refreshSlots = function() {
             $scope.checkStep2();
 
+            if($scope.data.county && $scope.data.county.id && $scope.data.agency && $scope.data.agency.id && $scope.data.service && $scope.data.service.id) {
+                $http
+                    .get(apiUrlFactory('data/freeslots.json') + '?service=' + encodeURIComponent($scope.data.service.id))
+                    .then(function (response) {
+                        if (response.data && response.data.freeslots) {
+                            $scope.freeslots = response.data.freeslots;
+                        }
+                        if (!$scope.freeslots || !$scope.freeslots.length) {
+                            toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit sloturi libere'));
+                        } else {
+                            $scope.minDate = $scope.freeslots[0].start;
+                        }
+                    });
+            }
+
+            $scope.checkStep3();
+        }
+
+        $scope.refreshTimes = function() {
+            $scope.times = [];
+            if ($scope.data.date) {
+                var format = moment.convertFormatFromPhp(CONFIG.shortStableDateFormat);
+                angular.forEach($scope.freeslots, function(slot) {
+                    if (moment($scope.data.date).format(format) == moment(slot.start).format(format)) {
+                        $scope.times.push({id: slot.start, name: moment(slot.start).format(moment.convertFormatFromPhp(CONFIG.shortTimeFormat))});
+                    }
+                });
+            }
+
+            if (!$scope.times.length && $scope.step == 2) {
+                // a little bit intrusive
+                //toastr.error(translationFactory.translate('common.reservation|Nu s-au gasit sloturi libere'));
+            }
+
+            $scope.checkStep3();
         }
 
         $scope.endReservation = function() {
             $http
-                .get(apiUrlFactory('data/validation.json?validationCode=' + encodeURIComponent($scope.data.validationCode)))
+                .post(apiUrlFactory('data/validation.json?validationCode=' + encodeURIComponent($scope.data.validationCode)))
                 .then(function (response) {
                     if (response.data && response.data.status && response.data.status === 'OK') {
                         toastr.success('Booking ID: ' + response.data.bookingId);
@@ -168,6 +225,12 @@ var CommonReservationController = ['$controller', '$scope', '$rootScope', '$stat
                     }
                 });
         };
+
+        $scope.$watch('data.date', function(newValue, oldValue) {
+            if (newValue != oldValue) {
+                $scope.refreshTimes();
+            }
+        });
     }
 ];
 

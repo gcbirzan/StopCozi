@@ -40,30 +40,27 @@ public class CitizenController {
     private AppointmentService appointmentService;
 
     @GET
-    @Path("/agencies/{location}/{name}")
+    @Path("/agencies/{location}{name :(/\\w+)?}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAgencies(@PathParam("location") String location, @PathParam("name") String name) {
-        List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name + "%");
+    public Response getAgencies(@PathParam("location") String location, @PathParam("name")  String name) {
+        List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name.replaceFirst("/", "") + "%");
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(agencies).build();
     }
 
     @GET
-    @Path("/services/{agencyId}/{serviceName}")
+    @Path("/services/{agencyId}{serviceName :(/\\w+)?}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
-        List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName + "%");
+        List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName.replaceFirst("/", "") + "%");
+        //
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(services).build();
     }
 
     @GET
-    @Path("/freeslots/{serviceId}/{year}/{month}")
+    @Path("/freeslots/{serviceId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFreeSlots(@PathParam("serviceId") Long serviceId, @PathParam("year") Integer year, @PathParam("month") Integer month) {
-    	Calendar calendar = Calendar.getInstance();
-    	calendar.set(Calendar.MONTH, month);
-    	calendar.set(Calendar.YEAR, year);
-    	
-        List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, calendar.getTime());
+    public Response getFreeSlots(@PathParam("serviceId") Long serviceId) {
+        List<FreeSlot> freeSlotList = freeSlotService.getFreeSlots(serviceId, new Date());
         return Response.status(200).entity(freeSlotList).build();
     }
 
@@ -73,7 +70,7 @@ public class CitizenController {
     public Response createAppointment(@PathParam("serviceId") Long serviceId, Appointment appointment) {
         Optional<Appointment> savedAppointment = appointmentService.createAppointment(serviceId, appointment);
         return savedAppointment.isPresent() ?
-            Response.status(200).entity(savedAppointment.get()).build() :
+            Response.status(200).entity("Mergeti cu incredere la ghiseul " + appointment.getOffice().getName()).build() :
             Response.status(400).entity("Alcineva dorind sa rezerve in acelasi timp a reusit inaintea dv.").build();
     }
 }
