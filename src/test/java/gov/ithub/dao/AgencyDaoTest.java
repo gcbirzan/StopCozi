@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by NiBo on 10/8/2016.
  */
@@ -57,5 +55,12 @@ public class AgencyDaoTest {
         Assert.assertNotNull(agencies);
         Assert.assertTrue(agencies.size() == 2);
 
+    }
+
+    @Test
+    public void testFindByLocationAndNameLike() throws Exception {
+        List<Agency> agencies = agencyDao.findByLocationAndNameLike("IS", "%Directia%");
+        Assert.assertNotNull(agencies);
+        Assert.assertTrue(agencies.size() == 1);
     }
 }

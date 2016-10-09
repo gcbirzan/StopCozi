@@ -37,18 +37,19 @@ public class CitizenController {
     private FreeSlotService freeSlotService;
 
     @GET
-    @Path("/agencies/{location}")
+    @Path("/agencies/{location}/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAgencies(@PathParam("location") String location) {
-        List<Agency> agencies = agencyDao.findByLocation(location);
+    public Response getAgencies(@PathParam("location") String location, @PathParam("name") String name) {
+        List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name + "%");
         return Response.status(200).entity(agencies).build();
     }
 
     @GET
-    @Path("/services/{agencyId}")
+    @Path("/services/{agencyId}/{serviceName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId) {
+    public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
         Service service = serviceDao.findByAgency(agencyDao.findOne(agencyId));
+        serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%"+serviceName+"%");
         return Response.status(200).entity(service).build();
     }
 

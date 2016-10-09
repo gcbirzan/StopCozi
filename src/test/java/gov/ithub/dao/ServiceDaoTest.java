@@ -43,6 +43,12 @@ public class ServiceDaoTest {
         Assert.assertEquals(service.getName(), "Depunere formular 200");
     }
 
+    @Test
+    public void testFind(){
+        Service service = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(Long.valueOf(1)), "%formular%");
+        Assert.assertNotNull(service);
+    }
+
     private void populateWithAgencies() {
         Agency agency = new Agency();
         agency.setId(Long.valueOf(1));
