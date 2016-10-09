@@ -44,7 +44,7 @@ public class CitizenController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAgencies(@PathParam("location") String location, @PathParam("name") String name) {
         List<Agency> agencies = agencyDao.findByLocationAndNameLike(location, "%" + name + "%");
-        return Response.status(200).entity(agencies).build();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(agencies).build();
     }
 
     @GET
@@ -52,7 +52,7 @@ public class CitizenController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getServicesByAgencies(@PathParam("agencyId") Long agencyId, @PathParam("serviceName") String serviceName) {
         List<Service> services = serviceDao.findByAgencyAndNameLike(agencyDao.findOne(agencyId), "%" + serviceName + "%");
-        return Response.status(200).entity(services).build();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(services).build();
     }
 
     @GET
