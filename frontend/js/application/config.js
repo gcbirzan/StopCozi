@@ -14,7 +14,8 @@ if (angular.isEmpty(_CONFIG)) {
 angular.extend(_CONFIG, {
     development: false, // set the development flag
     showTranslationKeys: false,
-    baseUrl: '', // the API base URL
+    baseUrl: '', // the base URL
+    apiUrl: 'http://10.10.20.102:8080', // the API base URL
     applicationName: 'StopCozi',
     applicationMail: 'info@stopcozi.ro',
     logoName: 'StopCozi',
