@@ -67,12 +67,5 @@ public class Appointment {
     public void setOffice(Office office) {
         this.office = office;
     }
-    
-    public void setEnd(Date end) {
-    	this.end = end;
-    }
-    
-    public Date getEnd() {
-    	return this.end;
-    }
+
 }
