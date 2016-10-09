@@ -3,7 +3,6 @@ package gov.ithub;
 import gov.ithub.rest.CitizenController;
 import gov.ithub.rest.ClerkController;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +15,6 @@ public class JerseyConfig extends ResourceConfig {
         register(new ObjectMapperContextResolver());
         register(CitizenController.class);
         register(ClerkController.class);
-        property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 
 }
